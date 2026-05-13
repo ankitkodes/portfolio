@@ -13,8 +13,45 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ankit kumar Portfolio",
-  description: "The portfolio of Ankit Kumar, showcasing skills and projects.",
+  title: "Ankit Kumar | Software Engineer & Full Stack Developer",
+  description: "Portfolio of Ankit Kumar, a passionate Software Engineer, Full Stack Developer, Frontend Developer, and Backend Developer. View my projects, skills, and experience.",
+  keywords: [
+    "Ankit Kumar",
+    "Ankit Kumar Portfolio",
+    "Software Engineer",
+    "Software Developer",
+    "Full Stack Developer",
+    "Frontend Developer",
+    "Backend Developer",
+    "MERN Stack Developer",
+    "React Developer",
+    "Next.js Developer"
+  ],
+  authors: [{ name: "Ankit Kumar" }],
+  creator: "Ankit Kumar",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://ankitkumar.dev", // Update this with your actual domain later
+    siteName: "Ankit Kumar Portfolio",
+    title: "Ankit Kumar | Software Engineer & Full Stack Developer",
+    description: "Portfolio of Ankit Kumar, a passionate Software Engineer and Full Stack Developer.",
+    images: [
+      {
+        url: "/images/profile.jpg", // This will use your profile image when shared
+        width: 1200,
+        height: 630,
+        alt: "Ankit Kumar - Software Engineer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ankit Kumar | Software Engineer & Full Stack Developer",
+    description: "Portfolio of Ankit Kumar, a passionate Software Engineer and Full Stack Developer.",
+    creator: "@itsankitkumar07",
+    images: ["/images/profile.jpg"],
+  },
 };
 
 export default function RootLayout({
