@@ -1,72 +1,69 @@
 // External Import
-import { MapPin, Twitter, Linkedin, Download } from "lucide-react";
+import { MapPin, Twitter, Linkedin, Download, Copy } from "lucide-react";
 import Image from "next/image";
-import { faCircleDot } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // internal import
 import profile from "../../public/images/profile.jpg";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
-import { dot } from "node:test/reporters";
 import Link from "next/link";
 
 export default function Profile() {
   return (
     <>
-      <div className="relative">
-        <div className="grid grid-cols-1 sm:grid-cols-2">
-          <div className="py-2 flex items-start">
-            <div className="inline-block">
+      <div className="pt-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+          <div className="flex items-center gap-5">
+            <div className="relative w-24 h-24 sm:w-28 sm:h-28 overflow-hidden rounded-2xl flex-shrink-0">
               <Image
                 src={profile}
-                alt="user profile"
-                width={120}
-                height={120}
-                className="rounded"
-              />{" "}
+                alt="Ankit Kumar"
+                fill
+                className="object-cover"
+              />
             </div>
-            <div className="inline-block px-3">
-              <div>
-                <p className="font-medium text-2xl">Ankit Kumar </p>
-                <p className="font-medium text-xl textColor">Web Developer</p>
-                <p className="textColor">
-                  <MapPin size={16} className="inline-block" /> New Delhi ,
-                  INDIA
-                </p>
-                <p className="text-sm textColor pt-2">
-                  <div className="text-green-500  inline-block mr-2">●</div>
-                  Available to work
-                </p>
+            <div className="flex flex-col gap-1.5">
+              <h1 className="text-2xl sm:text-3xl font-medium text-[#fafafa]">
+                Ankit Kumar
+              </h1>
+              <p className="text-base text-[#a0a0a0]">
+                Web Developer
+              </p>
+              <p className="text-sm text-[#808080] flex items-center">
+                <MapPin size={14} className="mr-1" /> New Delhi, India
+              </p>
+              <div className="flex items-center mt-1">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>
+                <span className="text-sm text-[#a0a0a0]">Available for work</span>
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center sm:justify-end py-2">
-            <Link href="">
-              {" "}
-              <Download size={16} className="inline-block" /> Dowload CV
+          <div className="mt-4 sm:mt-0 flex flex-col items-start sm:items-end gap-3">
+            <Link 
+              href="" 
+              className="text-sm text-[#b0b0b0] hover:text-white transition-colors flex items-center gap-1.5"
+            >
+              <Download size={14} /> Download CV
             </Link>
           </div>
         </div>
-        {/* <hr /> */}
-        <div className="my-4 textColor border-t-1  border-[#ababab]">
-          <Link href="" className="inline-block hover:text-white">
-            itsankitkumar07@gmail.com
-          </Link>
-          <div className="inline-block absolute right-2">
+        
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-5 border-t border-[#1a1a1a] mb-8 text-sm text-[#808080]">
+          <div className="flex items-center gap-2 mb-3 sm:mb-0 hover:text-white transition-colors cursor-pointer group">
+            <Copy size={14} className="group-hover:text-white transition-colors" /> itsankitkumar07@gmail.com
+          </div>
+          <div className="flex items-center gap-6">
             <Link
               href="https://x.com/itsankitkumar07"
               target="_blank"
-              className="inline-block mx-5 hover:text-white"
+              className="flex items-center gap-1.5 hover:text-white transition-colors"
             >
-              {" "}
-              <Twitter size={16} className="inline-block" /> twitter
+              <Twitter size={14} /> Twitter
             </Link>
             <Link
               href="https://www.linkedin.com/in/ankitkumar"
               target="_blank"
-              className="inline-block hover:text-white"
+              className="flex items-center gap-1.5 hover:text-white transition-colors"
             >
-              <Linkedin size={16} className="inline-block" /> Linkedln
+              <Linkedin size={14} /> LinkedIn
             </Link>
           </div>
         </div>

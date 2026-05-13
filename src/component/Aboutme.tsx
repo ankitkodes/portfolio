@@ -1,9 +1,11 @@
 export default function Aboutme() {
   return (
-    <div className="py-8">
-      <p className="text-lg sm:text-xl font-medium leading-[24px]">About me</p>
-      <div className="text-sm sm:text-base font-normal   textColor text-justify">
-        <p className="py-5">
+    <div className="pb-8">
+      <p className="text-lg sm:text-xl font-medium leading-[24px] mb-6 text-[#fafafa]">
+        About me
+      </p>
+      <div className="text-sm sm:text-base font-normal text-[#a0a0a0] leading-relaxed space-y-5 text-justify">
+        <p>
           I’m a passionate software engineer and MERN stack developer who enjoys
           building scalable, user-friendly, and efficient web applications. I
           have hands-on experience with modern tools and frameworks like React,
