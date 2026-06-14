@@ -99,15 +99,6 @@ const projects = [
     image: "/images/bugtrace.png",
   },
   {
-    name: "Pronto",
-    description: "Real-time messaging application with end-to-end delivery",
-    stack: ["React", "Socket.io", "Express", "MongoDB"],
-    github: "https://github.com/ankitkodes/pronto",
-    live: "https://pronto-chat.vercel.app",
-    accentColor: "#3b82f6",
-    image: "/images/pronto.png",
-  },
-  {
     name: "Codelave",
     description: "Online code execution platform with multi-language support",
     stack: ["Next.js", "NestJS", "Docker", "PostgreSQL"],
@@ -125,6 +116,15 @@ const projects = [
     accentColor: "#22c55e",
     image: "/images/medium.png",
   },
+  {
+    name: "Pronto",
+    description: "Real-time messaging application with end-to-end delivery",
+    stack: ["React", "Socket.io", "Express", "MongoDB"],
+    github: "https://github.com/ankitkodes/pronto",
+    live: "https://pronto-chat.vercel.app",
+    accentColor: "#3b82f6",
+    image: "/images/pronto.png",
+  },
 ];
 
 const blogPosts = [
@@ -133,28 +133,28 @@ const blogPosts = [
     date: "Jan 15, 2025",
     excerpt: "Common memory leak patterns in production Node.js applications and practical debugging strategies.",
     readTime: "6 min read",
-    link: "#",
+    link: "/v2/blog/nodejs-memory-leaks",
   },
   {
     title: "Migration Patterns for Event-Driven Architectures",
     date: "Dec 2, 2024",
     excerpt: "A practical guide to migrating monolithic systems to event-driven patterns without downtime.",
     readTime: "8 min read",
-    link: "#",
+    link: "/v2/blog/event-driven-architectures",
   },
   {
     title: "Building type-safe APIs with Hono and Zod",
     date: "Nov 10, 2024",
     excerpt: "End-to-end type safety from your API layer to the client using Hono's RPC mode.",
     readTime: "5 min read",
-    link: "#",
+    link: "/v2/blog/hono-zod-apis",
   },
   {
     title: "Docker multi-stage builds for Node.js — the right way",
     date: "Oct 18, 2024",
     excerpt: "Reduce your production image size by 80% with proper multi-stage Docker configurations.",
     readTime: "4 min read",
-    link: "#",
+    link: "/v2/blog/docker-node-multistage",
   },
 ];
 
@@ -170,6 +170,7 @@ const currently = [
 export default function V2Page() {
   const [activeTab, setActiveTab] = useState<TabName>("Home");
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [isThemeInitialized, setIsThemeInitialized] = useState(false);
   const tabsRef = useRef<HTMLDivElement>(null);
   const indicatorRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -180,16 +181,18 @@ export default function V2Page() {
     const saved = localStorage.getItem("v2-theme");
     const initial = saved ? (saved as "light" | "dark") : prefersDark ? "dark" : "light";
     setTheme(initial);
+    setIsThemeInitialized(true);
   }, []);
 
   // Apply theme to root
   useEffect(() => {
+    if (!isThemeInitialized) return;
     const root = rootRef.current?.closest(".v2-root");
     if (root) {
       (root as HTMLElement).setAttribute("data-theme", theme);
     }
     localStorage.setItem("v2-theme", theme);
-  }, [theme]);
+  }, [theme, isThemeInitialized]);
 
   // Update indicator position
   const updateIndicator = useCallback(() => {
