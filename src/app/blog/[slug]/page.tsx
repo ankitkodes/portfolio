@@ -251,7 +251,7 @@ export default function BlogPostPage({
       <div ref={rootRef} className="v2-wrapper">
         <nav className="v2-navbar">
           <div className="v2-navbar-inner">
-            <Link href="/v2" className="v2-navbar-name">Ankit Kumar</Link>
+            <Link href="/" className="v2-navbar-name">Ankit Kumar</Link>
             <div className="v2-navbar-actions">
               <button className="v2-theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
                 {theme === "light" ? <IconMoon /> : <IconSun />}
@@ -263,7 +263,7 @@ export default function BlogPostPage({
           <div className="v2-blog-404-code">404</div>
           <h1 className="v2-blog-404-title">Post not found</h1>
           <p className="v2-blog-404-text">The blog post you&apos;re looking for doesn&apos;t exist or has been moved.</p>
-          <Link href="/v2" className="v2-blog-404-link">
+          <Link href="/" className="v2-blog-404-link">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -282,7 +282,7 @@ export default function BlogPostPage({
       {/* Navbar — matches main portfolio */}
       <nav className="v2-navbar" id="v2-blog-navbar">
         <div className="v2-navbar-inner">
-          <Link href="/v2" className="v2-blog-back-link" id="v2-blog-back">
+          <Link href="/" className="v2-blog-back-link" id="v2-blog-back">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -383,7 +383,7 @@ export default function BlogPostPage({
 
         {/* Back to all posts */}
         <div className="v2-blog-back-section">
-          <Link href="/v2" className="v2-blog-all-posts-link">
+          <Link href="/" className="v2-blog-all-posts-link">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
