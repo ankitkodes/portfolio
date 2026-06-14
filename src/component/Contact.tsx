@@ -69,103 +69,103 @@ export default function Contact() {
   };
 
   return (
-    <div className="py-8">
-      <p className="text-lg sm:text-xl font-medium leading-[24px] mb-8">
-        Let&apos;s talk
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2">
-        <div>
-          <div className="border-l-2 border-[#1a1a1a] pl-4 mb-8">
-            <div className="py-2">
-              Email:
-              <div className="py-2">
-                <Link
-                  href="mailto:itsankitkumar07@gmail.com"
-                  className="textColor hover:text-white"
-                >
-                  itsankitkumar07@gmail.com
-                </Link>
-              </div>
+    <div className="py-16 border-t border-white/5 relative">
+      <span className="font-mono text-emerald-400 text-sm mb-2 block">&gt; ping -c 4 contact</span>
+      <h2 className="text-xl sm:text-2xl font-semibold text-slate-100 tracking-tight mb-10">
+        Initiate Handshake
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-10 px-2 relative z-10">
+        <div className="md:col-span-2 h-full">
+          <div className="border-l border-white/10 pl-6 py-4 space-y-8 font-mono h-full flex flex-col justify-center">
+            <div>
+              <span className="text-slate-500 text-xs uppercase tracking-wider mb-2 block">System Log // Email</span>
+              <Link
+                href="mailto:itsankitkumar07@gmail.com"
+                className="text-emerald-400 hover:text-emerald-300 transition-colors text-sm break-all"
+              >
+                itsankitkumar07@gmail.com
+              </Link>
             </div>
-            <div className="py-2">
-              Phone:
-              <div className="py-2">
-                <Link
-                  href="tel:+917759816393"
-                  className="textColor hover:text-white"
-                >
-                  +91 7759816393
-                </Link>
-              </div>
+            <div>
+              <span className="text-slate-500 text-xs uppercase tracking-wider mb-2 block">System Log // Phone</span>
+              <Link
+                href="tel:+917759816393"
+                className="text-slate-300 hover:text-white transition-colors text-sm"
+              >
+                +91 7759816393
+              </Link>
             </div>
-            <div className="py-2">
-              Socials:
-              <div className="py-2">
-                <Link href="" className="textColor hover:text-white">
-                  <Twitter size={16} className="inline-block mr-2" />
-                  Twitter
+            <div>
+              <span className="text-slate-500 text-xs uppercase tracking-wider mb-3 block">Network Nodes</span>
+              <div className="flex flex-col space-y-3">
+                <Link href="" className="text-slate-400 hover:text-emerald-400 transition-colors flex items-center text-sm w-max">
+                  <Twitter size={16} className="mr-3" />
+                  @itsankitkumar07
                 </Link>
-              </div>
-              <div className="py-2">
-                <Link href="" className="textColor hover:text-white">
-                  <Instagram size={16} className="inline-block mr-2" />
+                <Link href="" className="text-slate-400 hover:text-emerald-400 transition-colors flex items-center text-sm w-max">
+                  <Instagram size={16} className="mr-3" />
                   Instagram
                 </Link>
-              </div>
-              <div className="py-2">
-                <Link href="" className="textColor hover:text-white">
-                  <Linkedin size={16} className="inline-block mr-2" />
-                  Linkedin
+                <Link href="" className="text-slate-400 hover:text-emerald-400 transition-colors flex items-center text-sm w-max">
+                  <Linkedin size={16} className="mr-3" />
+                  LinkedIn
                 </Link>
               </div>
             </div>
           </div>
         </div>
-        <div>
-          <div>Reach out:</div>
-          <form onSubmit={handleSubmit} className="py-2">
-            <div>
-              <input
-                type="text"
-                name="name"
-                placeholder="Your name"
-                required
-                className="w-full border-2 rounded px-4 py-2 mb-4 textColor bg-[#1a1a1a] border-[#1a1a1a] focus:border-white focus:outline-none"
-              />
+        <div className="md:col-span-3">
+          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 sm:p-8 shadow-xl">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+              <span className="ml-2 font-mono text-xs text-slate-500">~/contact/send.sh</span>
             </div>
-            <div>
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email address"
-                required
-                className="w-full border-2 rounded px-4 py-2 mb-4 textColor bg-[#1a1a1a] border-[#1a1a1a] focus:border-white focus:outline-none"
-              />
-            </div>
-            <div>
-              <textarea
-                name="message"
-                placeholder="Message"
-                required
-                className="w-full border-2 rounded px-4 py-2 mb-4 textColor bg-[#1a1a1a] border-[#1a1a1a] focus:border-white focus:outline-none h-32"
-              />
-            </div>
-            <div>
-              <button
-                type="submit"
-                disabled={status === "sending" || status === "sent"}
-                className={`w-full rounded-lg py-2 cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 ${
-                  status === "sent"
-                    ? "bg-emerald-500 text-white"
-                    : status === "error"
-                      ? "bg-red-500 text-white"
-                      : "bg-white text-black hover:bg-gray-200"
-                } disabled:cursor-not-allowed`}
-              >
-                {buttonContent()}
-              </button>
-            </div>
-          </form>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="&gt; Your Name"
+                  required
+                  className="w-full rounded-xl px-4 py-3 bg-[#030305]/50 border border-white/10 text-slate-200 placeholder-slate-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all font-mono text-sm"
+                />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="&gt; Your Email Address"
+                  required
+                  className="w-full rounded-xl px-4 py-3 bg-[#030305]/50 border border-white/10 text-slate-200 placeholder-slate-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all font-mono text-sm"
+                />
+              </div>
+              <div>
+                <textarea
+                  name="message"
+                  placeholder="&gt; Message Payload..."
+                  required
+                  className="w-full rounded-xl px-4 py-3 bg-[#030305]/50 border border-white/10 text-slate-200 placeholder-slate-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all font-mono text-sm h-32 resize-none"
+                />
+              </div>
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  disabled={status === "sending" || status === "sent"}
+                  className={`w-full rounded-xl py-3 font-mono text-sm cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 ${
+                    status === "sent"
+                      ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                      : status === "error"
+                        ? "bg-red-500/20 text-red-400 border border-red-500/50"
+                        : "bg-emerald-600 text-white hover:bg-emerald-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] border border-emerald-500"
+                  } disabled:cursor-not-allowed`}
+                >
+                  {buttonContent()}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

@@ -4,56 +4,56 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 
 export default function Navbar() {
-  const [navbar, Hidenavbar] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const linkClasses = (hidden: boolean) =>
-    `flex items-center transition-all duration-300 overflow-hidden ${hidden
-      ? "opacity-0 invisible max-w-0 pointer-events-none"
-      : "opacity-100 visible max-w-[500px] pointer-events-auto"
-    }`;
+  const linkContainerClasses = `flex items-center transition-all duration-300 ease-in-out overflow-x-auto no-scrollbar ${
+    isOpen 
+      ? "opacity-100 max-w-[800px] visible px-2" 
+      : "opacity-0 max-w-0 invisible px-0"
+  }`;
 
   return (
-    <>
-      <div className="my-4 flex justify-center">
-        <div className="border-1 w-min border-[#242424] rounded flex justify-center items-center bg-[#242424]">
-          <div className={linkClasses(navbar)}>
-            <Link href="#about" className="px-2 text-[#fafafa] whitespace-nowrap">
-              About
-            </Link>
-            <Link href="#work" className="px-2 text-[#fafafa] whitespace-nowrap">
-              Work
-            </Link>
-            <Link href="#experience" className="px-2 text-[#fafafa] whitespace-nowrap">
-              Experience
-            </Link>
-          </div>
-
-          <div className="flex-shrink-0">
-            <button
-              className="cursor-pointer bg-black border-1 border-black rounded p-1"
-              onClick={() => Hidenavbar(!navbar)}
-            >
-              <Plus
-                className={`inline-block transition-transform duration-300 ${navbar ? "rotate-0" : "rotate-45"
-                  }`}
-              />
-            </button>
-          </div>
-
-          <div className={linkClasses(navbar)}>
-            <Link href="#education" className="px-2 text-[#fafafa] whitespace-nowrap">
-              Education
-            </Link>
-            <Link href="#skills" className="px-2 text-[#fafafa] whitespace-nowrap">
-              Skills
-            </Link>
-
-            <Link href="#contact" className="px-2 text-[#fafafa] whitespace-nowrap">
-              Contact
-            </Link>
-          </div>
+    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex justify-center w-max max-w-[95vw]">
+      <div className="border border-[#242424] rounded-full flex justify-between items-center bg-[#242424]/90 backdrop-blur-md p-1.5 shadow-lg">
+        
+        <div className={linkContainerClasses}>
+          <Link href="#about" className="px-3 py-1.5 text-sm text-[#fafafa] hover:text-white hover:bg-white/10 rounded-full transition-colors whitespace-nowrap">
+            About
+          </Link>
+          <Link href="#work" className="px-3 py-1.5 text-sm text-[#fafafa] hover:text-white hover:bg-white/10 rounded-full transition-colors whitespace-nowrap">
+            Work
+          </Link>
+          <Link href="#experience" className="px-3 py-1.5 text-sm text-[#fafafa] hover:text-white hover:bg-white/10 rounded-full transition-colors whitespace-nowrap">
+            Experience
+          </Link>
+          <Link href="#education" className="px-3 py-1.5 text-sm text-[#fafafa] hover:text-white hover:bg-white/10 rounded-full transition-colors whitespace-nowrap">
+            Education
+          </Link>
+          <Link href="#skills" className="px-3 py-1.5 text-sm text-[#fafafa] hover:text-white hover:bg-white/10 rounded-full transition-colors whitespace-nowrap">
+            Skills
+          </Link>
+          <Link href="#articles" className="px-3 py-1.5 text-sm text-[#fafafa] hover:text-white hover:bg-white/10 rounded-full transition-colors whitespace-nowrap">
+            Blog
+          </Link>
+          <Link href="#contact" className="px-3 py-1.5 text-sm text-[#fafafa] hover:text-white hover:bg-white/10 rounded-full transition-colors whitespace-nowrap">
+            Contact
+          </Link>
         </div>
+
+        <div className="flex-shrink-0 z-10">
+          <button
+            className="cursor-pointer bg-white text-black rounded-full p-2 hover:scale-105 transition-transform flex items-center justify-center"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle navigation"
+          >
+            <Plus
+              size={20}
+              className={`transition-transform duration-300 ${isOpen ? "rotate-45" : "rotate-0"}`}
+            />
+          </button>
+        </div>
+
       </div>
-    </>
+    </div>
   );
 }

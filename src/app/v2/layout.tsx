@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import "./v2.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://ankitkumar.dev", // Update this with your actual domain later
+    url: "https://ankitkumar.site", // Update this with your actual domain later
     siteName: "Ankit Kumar Portfolio",
     title: "Ankit Kumar | Software Engineer & Full Stack Developer",
     description: "Portfolio of Ankit Kumar, a passionate Software Engineer and Full Stack Developer.",
@@ -53,19 +55,17 @@ export const metadata: Metadata = {
     images: ["/images/og-image.png"],
   },
 };
-
-export default function RootLayout({
+export default function V2Layout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <div
+      className={`${inter.variable} ${jetbrainsMono.variable} v2-root`}
+      suppressHydrationWarning
+    >
+      {children}
+    </div>
   );
 }

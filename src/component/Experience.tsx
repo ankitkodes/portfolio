@@ -26,26 +26,32 @@ const experienceData: ExperienceItem[] = [
 export default function Experience() {
   return (
     <>
-      <div className="py-8">
-        <p className="text-lg sm:text-xl font-medium leading-[24px]">
+      <div className="py-12 border-t border-white/5 relative">
+        <span className="font-mono text-emerald-400 text-sm mb-2 block">&gt; history | grep work</span>
+        <h2 className="text-xl sm:text-2xl font-semibold text-slate-100 tracking-tight mb-10">
           Experience
-        </p>
-        <div className="mt-8 space-y-12">
+        </h2>
+        <div className="space-y-12 relative">
           {experienceData.map((exp, index) => (
-            <div key={index} className="border-l border-[#242424] pl-5 relative">
-              <div className="flex justify-between items-center textColor">
-                <p className="text-sm">
-                  <MapPin size={14} className="inline-block mr-1.5 -mt-0.5" />
+            <div key={index} className="relative pl-8 sm:pl-10 group">
+              {/* Timeline Track & Node */}
+              <div className="absolute left-0 top-1.5 bottom-[-3rem] w-[1px] bg-white/10 group-last:bottom-0"></div>
+              <div className="absolute left-[-4px] top-1.5 w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)] ring-4 ring-[#030305] group-hover:scale-125 transition-transform duration-300"></div>
+              
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-slate-400 font-mono mb-2">
+                <p className="text-xs sm:text-sm flex items-center text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                  <MapPin size={12} className="mr-1.5" />
                   {exp.location}
                 </p>
-                <p className="text-sm">{exp.duration}</p>
+                <p className="text-xs sm:text-sm mt-2 sm:mt-0 opacity-80">{exp.duration}</p>
               </div>
-              <p className="font-medium text-base sm:text-lg mt-3 text-[#fafafa]">{exp.role}</p>
-              <p className="textColor text-sm mt-1">{exp.company}</p>
-              <ul className="mt-6 text-sm sm:text-base textColor leading-relaxed list-disc pl-4 space-y-2">
+              <h3 className="font-semibold text-lg sm:text-xl mt-3 text-slate-100 group-hover:text-emerald-400 transition-colors">{exp.role}</h3>
+              <p className="text-emerald-400/80 text-sm mt-1 font-mono">&gt; {exp.company}</p>
+              <ul className="mt-5 text-sm sm:text-base text-slate-400 leading-relaxed space-y-3">
                 {exp.description.map((desc, i) => (
-                  <li key={i} className="pl-1">
-                    {desc}
+                  <li key={i} className="flex items-start">
+                    <span className="text-emerald-500 mr-3 mt-1.5 opacity-50">&gt;&gt;</span>
+                    <span className="flex-1">{desc}</span>
                   </li>
                 ))}
               </ul>

@@ -42,58 +42,66 @@ const projects: ProjectItem[] = [
 export default function Project() {
   return (
     <>
-      <div className="py-8">
-        <div className="flex justify-between items-center mb-6">
-          <p className="text-lg sm:text-xl font-medium leading-[24px]">
-            Some of my projects
-          </p>
-          <div className="textColor">
-            <Link href="" className="hover:text-white flex items-center text-sm transition-colors">
-              View all
-              <MoveUpRight size={14} className="ml-1" />
+      <div className="py-12 border-t border-white/5">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8">
+          <div>
+            <span className="font-mono text-emerald-400 text-sm mb-2 block">&gt; ls ./projects</span>
+            <h2 className="text-xl sm:text-2xl font-semibold text-slate-100 tracking-tight">
+              Featured Work
+            </h2>
+          </div>
+          <div className="mt-4 sm:mt-0 text-slate-400">
+            <Link href="" className="hover:text-emerald-400 flex items-center text-sm font-mono transition-colors">
+              [ view_all_repos ]
+              <MoveUpRight size={14} className="ml-1.5" />
             </Link>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {projects.map((project, index) => (
             <Link
               key={index}
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-xl border border-[#242424] overflow-hidden bg-[#121212] transition-colors hover:border-[#444] flex flex-col"
+              className="group rounded-2xl border border-white/10 overflow-hidden bg-white/5 backdrop-blur-sm transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] flex flex-col"
             >
               {/* Image / Placeholder */}
               <div
                 className={`w-full aspect-[4/3] ${project.imagePlaceholderColor || "bg-[#1a1a1a]"} relative overflow-hidden flex items-center justify-center`}
               >
                 {project.image ? (
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+                  <>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#030305] to-transparent z-10 opacity-60"></div>
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  </>
                 ) : (
-                  <p className="textColor text-sm opacity-50">Image Placeholder</p>
+                  <p className="text-slate-500 text-sm font-mono opacity-50">&lt;ImagePlaceholder /&gt;</p>
                 )}
               </div>
 
               {/* Card Footer */}
-              <div className="p-4 flex justify-between items-center bg-[#1a1a1a]">
+              <div className="p-5 flex justify-between items-center bg-[#030305]/80 backdrop-blur-md relative z-20 -mt-2">
                 <div>
-                  <h3 className="font-medium text-[#fafafa] text-base mb-1 group-hover:text-white transition-colors">
+                  <h3 className="font-semibold text-slate-100 text-lg mb-1 group-hover:text-emerald-400 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-sm textColor">
+                  <p className="text-sm text-slate-400 font-mono">
                     {project.category}
                   </p>
                 </div>
-                <ArrowRight
-                  size={18}
-                  className="textColor transition-all duration-300 group-hover:text-white group-hover:-rotate-45"
-                />
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/50 transition-all duration-300">
+                  <ArrowRight
+                    size={18}
+                    className="text-slate-400 transition-all duration-300 group-hover:text-emerald-400 group-hover:-rotate-45"
+                  />
+                </div>
               </div>
             </Link>
           ))}
