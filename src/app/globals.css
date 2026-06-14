@@ -106,10 +106,12 @@ body:has(.v2-root)::after {
   width: 6px;
   height: 0px;
 }
+
 .v2-root ::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 3px;
 }
+
 .v2-root ::-webkit-scrollbar-track {
   background: transparent;
 }
@@ -167,10 +169,12 @@ body:has(.v2-root)::after {
   transition: color 200ms ease, background-color 200ms ease;
   font-size: 18px;
 }
+
 .v2-theme-toggle svg {
   width: 16px;
   height: 16px;
 }
+
 .v2-theme-toggle:hover {
   background-color: color-mix(in srgb, var(--text-muted) 10%, transparent);
   color: var(--text-primary);
@@ -186,6 +190,7 @@ body:has(.v2-root)::after {
   color: var(--accent);
   transition: all 200ms ease;
 }
+
 .v2-hire-btn:hover {
   background-color: var(--accent);
   color: #fff;
@@ -447,6 +452,7 @@ body:has(.v2-root)::after {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .v2-pinned-row::-webkit-scrollbar {
   display: none;
 }
@@ -528,6 +534,7 @@ body:has(.v2-root)::after {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .v2-tabs-inner::-webkit-scrollbar {
   display: none;
 }
@@ -681,7 +688,8 @@ body:has(.v2-root)::after {
 
 .v2-timeline-dot {
   position: absolute;
-  left: -25px; /* Centers the dot on the line */
+  left: -25px;
+  /* Centers the dot on the line */
   top: 6px;
   width: 11px;
   height: 11px;
@@ -1164,7 +1172,7 @@ body:has(.v2-root)::after {
   transition: color 200ms ease;
 }
 
-.v2-blog-article > * + * {
+.v2-blog-article>*+* {
   margin-top: 1.5em;
 }
 
@@ -1687,6 +1695,7 @@ body:has(.v2-root)::after {
    PRINT
    ============================================ */
 @media print {
+
   .v2-navbar,
   .v2-tabs,
   .v2-theme-toggle,
@@ -1735,9 +1744,11 @@ body:has(.v2-root)::after {
   animation: none;
   mix-blend-mode: normal;
 }
+
 ::view-transition-old(root) {
   z-index: 1;
 }
+
 ::view-transition-new(root) {
   z-index: 2;
 }
