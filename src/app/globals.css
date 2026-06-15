@@ -180,7 +180,7 @@ body:has(.v2-root)::after {
   color: var(--text-primary);
 }
 
-/* Hire Me Button */
+/* Resume Button */
 .v2-hire-btn {
   font-size: 14px;
   font-weight: 500;
@@ -188,6 +188,9 @@ body:has(.v2-root)::after {
   border-radius: 9999px;
   border: 1.5px solid var(--accent);
   color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   transition: all 200ms ease;
 }
 
