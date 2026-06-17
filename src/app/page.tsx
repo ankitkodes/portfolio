@@ -100,6 +100,15 @@ const experiences = [
 
 const projects = [
   {
+    name: "Aurum",
+    description: "A double-entry payment ledger engine built for accuracy and auditability. Every transaction is immutable, every balance is reconcilable, and every state change is logged — the way financial systems are supposed to work.",
+    stack: ["Node.js", "Express.js", "PostgreSQL", "Drizzle ORM"],
+    github: "https://github.com/ankitkodes/Aurum",
+    live: "",
+    accentColor: "#f59e0b",
+    image: "",
+  },
+  {
     name: "BugTrace",
     description: "An advanced, full-stack error tracking and performance monitoring platform designed to capture, organize, and alert developers about production issues in real-time. Features include source-map support, detailed stack traces, and custom dashboards.",
     stack: ["Nextjs", "PostgreSql", "TailwindCSS", "TanStack Query"],
@@ -148,6 +157,7 @@ const blogPosts = [
 ];
 
 const currently = [
+  { icon: "🔨", label: "Building", value: "Aurum — Double-entry payment ledger engine" },
   { icon: "📚", label: "Learning", value: "Distributed Systems & Kafka" },
   { icon: "📖", label: "Reading", value: "Designing Data-Intensive Applications" },
   { icon: "🎧", label: "Listening", value: "The Primeagen — Backend Banter" },
@@ -377,16 +387,16 @@ export default function V2Page() {
             </span>
           </a>
           <a
-            href="https://github.com/ankitkodes/codelave"
+            href="https://github.com/ankitkodes/Aurum"
             target="_blank"
             rel="noopener noreferrer"
             className="v2-pinned-card"
             id="v2-pinned-project"
           >
             <div className="v2-pinned-label">🚀 Current Project</div>
-            <div className="v2-pinned-title">Codelave</div>
+            <div className="v2-pinned-title">Aurum</div>
             <div className="v2-pinned-desc">
-              Online code execution platform with multi-language support.
+              Double-entry payment ledger engine built for accuracy and auditability.
             </div>
             <span className="v2-pinned-link">
               View Repo <IconChevronRight />
