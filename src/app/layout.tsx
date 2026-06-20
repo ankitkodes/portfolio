@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://ankitkumar.dev", // Update this with your actual domain later
+    url: "https://ankitkumar.site", // Update this with your actual domain later
     siteName: "Ankit Kumar Portfolio",
     title: "Ankit Kumar | Software Engineer & Full Stack Developer",
     description: "Portfolio of Ankit Kumar, a passionate Software Engineer and Full Stack Developer.",
@@ -58,6 +58,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { ThemeProvider } from "@/component/ThemeProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -68,7 +70,23 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} v2-root`}
       >
-        {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem("v2-theme");
+                  var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                  var theme = saved ? saved : (prefersDark ? "dark" : "light");
+                  document.body.setAttribute("data-theme", theme);
+                } catch (e) {}
+              })();
+            `
+          }}
+        />
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
         <Analytics />
         <SpeedInsights />
       </body>

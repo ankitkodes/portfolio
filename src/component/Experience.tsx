@@ -15,10 +15,9 @@ const experienceData: ExperienceItem[] = [
     role: "Full Stack Developer",
     company: "noDevBuild",
     description: [
-      "Implemented end-to-end Razorpay payment gateway integration including webhook handling, order verification, and payment failure reconciliation, enabling live transactions in production.",
-      "Built an OCR-based document verification frontend from scratch with fully responsive design, allowing users to review and correct extracted data in real-time with zero backend dependency on initial load.",
-      "Improved web performance by refactoring core React components with lazy loading, memoization, and list virtualization — measurably reducing page load time across multiple high-traffic modules.",
-      "Collaborated with 6–7 engineers to define RESTful API contracts, deliver production features on schedule, and maintain quality through Agile sprints and CI/CD pipelines via Vercel.",
+      "Engineered a Razorpay payment gateway integration with webhook-based order verification and failure reconciliation, ensuring zero data loss on transactions.",
+      "Built the frontend for an OCR-based document verification flow, integrating backend APIs for real-time data review and correction.",
+      "Revamped core UI components, reducing First Contentful Paint (FCP) by 1.5 seconds through lazy loading and memoization.",
     ],
   },
 ];
@@ -37,7 +36,7 @@ export default function Experience() {
               {/* Timeline Track & Node */}
               <div className="absolute left-0 top-1.5 bottom-[-3rem] w-[1px] bg-white/10 group-last:bottom-0"></div>
               <div className="absolute left-[-4px] top-1.5 w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)] ring-4 ring-[#030305] group-hover:scale-125 transition-transform duration-300"></div>
-              
+
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-slate-400 font-mono mb-2">
                 <p className="text-xs sm:text-sm flex items-center text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
                   <MapPin size={12} className="mr-1.5" />

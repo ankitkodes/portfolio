@@ -1,0 +1,607 @@
+INTERNSHIP REPORT
+E-COMMERCE WEBSITE
+B.TECH 3rd YEAR | SESSION: 2024-2025
+
+Submitted By:
+Abhijeet Kumar (2022596015) | Section: F
+
+Internship Organization:
+Simplilearn Solutions Pvt. Ltd.
+Internship Guide:
+Dr. Yojna Arora
+Associate Professor
+
+DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING
+SHARDA SCHOOL OF ENGINEERING & TECHNOLOGY
+SHARDA UNIVERSITY, GREATER NOIDA
+
+DECLARATION
+I hereby declare that the Internship Report entitled "E-Commerce Website" is an authentic record of my
+own work carried out during my internship at Simplilearn Solutions Pvt. Ltd. The work presented in this
+report has been done by me under the guidance of Dr. Yojna Arora (Associate Professor) as a partial
+fulfilment of the requirements for the award of the degree of B.Tech. in Computer Science Engineering,
+School of Engineering and Technology, Sharda University, Greater Noida.
+The work contained in this report has not been submitted elsewhere for the award of any other degree or
+diploma.
+
+Date: ___________________
+Signature of Student: ____________________________
+Name: Alok Kumar
+Roll No.: 2022593768
+
+Certified that the above statement made by the student is correct to the best of our knowledge and belief.
+Examined By:
+Signature: ____________________________
+Name: Dr. Yojna Arora
+Designation: Associate Professor
+
+ACKNOWLEDGEMENT
+I would like to express my sincere gratitude to my internship guide, Dr. Yojna Arora (Associate
+Professor), for her invaluable guidance, constant encouragement, and wholehearted support throughout
+the course of this internship at Simplilearn Solutions Pvt. Ltd. Her technical expertise and mentorship
+greatly helped me in understanding real-world software development practices.
+I am also deeply thankful to Simplilearn Solutions Pvt. Ltd. for providing me with this remarkable
+opportunity to work on a live e-commerce project, and for making available all the necessary resources,
+tools, and infrastructure required for the successful completion of this work.
+I extend my heartfelt thanks to Sharda University and the Department of Computer Science &
+Engineering for encouraging students to undertake industrial internships as a core component of the
+B.Tech. curriculum. The academic foundation provided by the faculty members of the university proved
+indispensable in executing this project.
+Finally, I express my gratitude to all individuals who directly or indirectly supported and motivated me
+during this journey.
+
+TABLE OF CONTENTS
+CONTENTS
+
+PAGE NO.
+
+1. Introduction...........................................................................................................................5
+2. Internship Overview..............................................................................................................6
+3. Project Description................................................................................................................7
+4. System Architecture & Technology Stack............................................................................ 8
+5. Features Implemented......................................................................................................9-10
+6. Database Design..................................................................................................................11
+7. Implementation Details..................................................................................................12-14
+8. Testing & Results................................................................................................................15
+9. Challenges & Learnings......................................................................................................16
+10. Conclusion......................................................................................................................... 17
+11. References..........................................................................................................................18
+
+LIST OF FIGURES
+FIGURE DESCRIPTION
+
+PAGE NO.
+
+Figure 1: Landing Page ...............................................................................................................10
+Figure 2: Shop Page ......................................................................................…………………...10
+Figure 3: Shop Page .................................................................................................................... 13
+Figure 4: Cart Page ..................................................................................................................... 13
+Figure 5: Footer Page .................................................................................................................. 14
+
+CHAPTER 1: INTRODUCTION
+The rapid growth of the internet and mobile technology has fundamentally transformed the way
+businesses operate and consumers shop. E-commerce, or electronic commerce, has emerged as one of
+the most dynamic and influential sectors of the global economy. From small independent retailers to
+large multinational corporations, businesses of every scale have embraced online platforms to reach
+wider audiences, streamline operations, and enhance customer experience.
+This internship report documents the work undertaken during the internship period at Simplilearn
+Solutions Pvt. Ltd., where a fully functional e-commerce web application was designed and developed
+from scratch. The project was conceived and implemented using a modern full-stack technology
+approach combining Node.js, Express.js, MongoDB, React.js, and raw CSS — collectively enabling a
+robust, scalable, and user-friendly online shopping platform.
+The developed application supports two distinct types of users: administrators and shoppers.
+Administrators have the ability to register, log in, and manage their product catalogue by listing new
+products with relevant details. Regular users (shoppers) can register, log in, browse the product listing,
+add items to their shopping cart, and proceed to checkout. This dual-role architecture closely mirrors the
+real-world structure of popular e-commerce platforms.
+This report presents a comprehensive account of the internship experience, the project objectives, the
+architecture and technology stack employed, the individual features implemented, challenges faced
+during development, and the knowledge gained throughout the process.
+
+CHAPTER 2: INTERNSHIP OVERVIEW
+2.1 Organization Profile
+Simplilearn Solutions Pvt. Ltd. is a globally recognized digital skills training platform that provides
+professional certification and upskilling programs in domains such as Data Science, Cloud Computing,
+Cyber Security, Full-Stack Development, and Digital Marketing. Headquartered in Bengaluru, India,
+Simplilearn partners with leading universities, enterprises, and industry experts to deliver
+outcome-based learning experiences.
+The organization also hosts internship programs that give students practical, hands-on experience in
+real-world software development projects under the mentorship of experienced professionals.
+
+2.2 Internship Details
+• Organization: Simplilearn Solutions Pvt. Ltd.
+• Internship Guide: Dr. Yojna Arora (Associate Professor)
+• Domain: Full-Stack Web Development
+• Duration: As per university internship schedule
+• Mode: Project-based internship
+
+2.3 Objectives of the Internship
+The primary objectives set at the commencement of the internship were:
+• To gain hands-on experience in building a production-grade web application using the MERN-like
+stack (MongoDB, Express.js, React.js, Node.js).
+• To understand and implement a role-based user system with separate admin and user workflows.
+• To develop a complete e-commerce solution encompassing product management, shopping cart
+functionality, and checkout processing.
+• To practise modern front-end development techniques using React.js and raw CSS for custom
+styling.
+• To integrate a NoSQL database (MongoDB) for flexible and scalable data storage.
+
+CHAPTER 3: PROJECT DESCRIPTION
+3.1 Project Title
+E-Commerce Website — A full-stack web application enabling administrators to list and manage
+products and users to browse, add to cart, and purchase products online.
+
+3.2 Problem Statement
+Small and medium-sized businesses often lack affordable, customisable e-commerce platforms that give
+them full control over their product listings and sales pipeline. Off-the-shelf solutions either impose high
+subscription costs or limit customisation. The goal of this project was to build a bespoke,
+open-architecture e-commerce platform that any business could own and extend.
+
+3.3 Scope of the Project
+The project covers the complete lifecycle of an online shopping experience, including:
+• User authentication and authorisation (separate admin and user roles).
+• Product catalogue management by administrators.
+• Product browsing and search by shoppers.
+• Shopping cart management (add, remove, update items).
+• Checkout process with order summary.
+
+3.4 Vision & Mission
+Vision: To provide an open, scalable, and developer-friendly e-commerce platform that empowers small
+businesses to sell online without vendor lock-in.
+Mission: To build a clean, maintainable full-stack application that separates admin and shopper concerns
+while delivering a seamless purchasing experience.
+
+CHAPTER 4: SYSTEM ARCHITECTURE & TECHNOLOGY STACK
+4.1 Architecture Overview
+The application follows the client-server architecture with a clear separation between the front-end
+(React.js) and the back-end (Node.js + Express.js). The back-end exposes a RESTful API that is
+consumed by the React front-end. Data is persisted in a MongoDB database hosted locally (or via
+MongoDB Atlas in the cloud environment).
+The architecture can be summarised in three tiers:
+• Presentation Layer: React.js components styled with raw CSS, running in the browser.
+• Application Layer: Node.js and Express.js server handling routing, business logic, authentication
+middleware, and API responses.
+• Data Layer: MongoDB collections for users, products, carts, and orders.
+
+4.2 Technology Stack
+Category
+
+Technology
+
+Purpose
+
+Front-End
+
+React.js
+
+UI component library for
+building dynamic views
+
+Styling
+
+Raw CSS
+
+Custom styling without any
+CSS framework
+
+Back-End
+
+Node.js
+
+JavaScript runtime for the
+server
+
+Web Framework
+
+Express.js
+
+Minimal web framework for
+API routes
+
+Database
+
+MongoDB
+
+NoSQL document database for
+flexible data storage
+
+ODM
+
+Mongoose
+
+Schema-based MongoDB
+object modelling for Node.js
+
+Authentication
+
+JWT / bcrypt
+
+JSON Web Tokens for auth;
+bcrypt for password hashing
+
+HTTP Client
+
+Axios
+
+Promise-based HTTP client in
+React for API calls
+
+CHAPTER 5: FEATURES IMPLEMENTED
+5.1 Admin Features
+The admin side of the application provides the following capabilities:
+
+5.1.1 Admin Signup & Login
+Administrators can create a new account by providing their name, email address, and a secure password.
+The password is hashed using bcrypt before being stored in the MongoDB database. On subsequent
+visits, admins can log in using their registered credentials. Upon successful authentication, a JWT
+(JSON Web Token) is issued and stored on the client side to maintain the session.
+
+5.1.2 Product Listing (Add Products)
+Once authenticated, an admin can add new products to the platform. Each product entry includes the
+following fields:
+• Product Name
+• Description
+• Price
+• Stock Quantity
+• Product Image URL
+• Category
+Products added by the admin are immediately visible to all shoppers browsing the platform.
+
+5.2 User (Shopper) Features
+The shopper-facing side of the application provides a complete online shopping experience:
+
+5.2.1 User Signup & Login
+New shoppers can register on the platform by providing their name, email, and password. Similar to the
+admin flow, the password is hashed securely before storage. Returning users can log in to access their
+personalised shopping experience. Authentication is managed via JWT tokens.
+
+Figure 1: Landing Page
+
+Figure 2: Shop Page
+
+5.2.2 Browse Products
+Authenticated users can view the complete product catalogue on the home page. Each product card
+displays the product image, name, price, and a brief description, giving shoppers all the information they
+need to make a purchase decision.
+
+5.2.3 Add to Cart
+Users can add any product to their shopping cart with a single click. The cart dynamically updates to
+reflect the selected items, their quantities, and the running total price. Users can also adjust the quantity
+of each item or remove items from the cart before proceeding.
+
+5.2.4 Checkout
+From the cart page, users can proceed to checkout. The checkout flow summarises the order — listing
+all selected products, quantities, individual prices, and the grand total. The system confirms the order
+and presents a success notification to the user upon completion.
+
+CHAPTER 6: DATABASE DESIGN
+6.1 MongoDB Collections
+MongoDB was used as the primary database. The following collections were designed to store
+application data:
+
+6.1.1 Users Collection
+• _id: ObjectId (auto-generated primary key)
+• name: String — Full name of the user or admin
+• email: String — Unique email address used for login
+• password: String — bcrypt-hashed password
+• role: String — Either 'admin' or 'user' to distinguish roles
+• createdAt: Date — Timestamp of account creation
+
+6.1.2 Products Collection
+• _id: ObjectId
+• name: String — Product title
+• description: String — Detailed product description
+• price: Number — Product price
+• stock: Number — Available stock quantity
+• imageUrl: String — URL of the product image
+• category: String — Product category
+• createdBy: ObjectId — Reference to the admin who listed the product
+
+6.1.3 Cart Collection
+• _id: ObjectId
+• userId: ObjectId — Reference to the logged-in user
+• items: Array of { productId: ObjectId, quantity: Number }
+• updatedAt: Date
+
+6.1.4 Orders Collection
+• _id: ObjectId
+• userId: ObjectId — The buyer
+• items: Array of { productId: ObjectId, quantity: Number, price: Number }
+
+• totalAmount: Number
+• status: String — e.g., 'pending', 'confirmed'
+• createdAt: Date
+
+CHAPTER 7: IMPLEMENTATION DETAILS
+7.1 Project Structure
+The project is organised into two main directories — a backend/ folder containing the Node.js/Express.js
+server and a frontend/ folder housing the React.js application.
+Backend Directory Structure:
+• server.js — Entry point; sets up Express app, connects to MongoDB, and starts the HTTP server.
+• routes/ — Contains separate route files for auth (authRoutes.js), products (productRoutes.js), cart
+(cartRoutes.js), and orders (orderRoutes.js).
+• controllers/ — Business logic for each route.
+• models/ — Mongoose schema definitions for User, Product, Cart, and Order.
+• middleware/ — Authentication middleware using JWT verification.
+Frontend Directory Structure:
+• src/components/ — Reusable React components such as Navbar, ProductCard, CartItem, etc.
+• src/pages/ — Page-level components: Home, Login, Signup, Cart, Checkout, AdminDashboard.
+• src/services/ — Axios API service functions for communicating with the back-end.
+• src/App.js — Root component with React Router configuration.
+
+7.2 Authentication Flow
+Authentication was implemented using JSON Web Tokens (JWT). When a user or admin logs in
+successfully, the server signs a JWT containing the user's ID and role. This token is stored in
+localStorage on the client side. For every protected API request, the React application attaches the token
+in the Authorization header. The server's auth middleware verifies the token before granting access to
+the protected route.
+
+7.3 REST API Endpoints
+Method
+
+Endpoint
+
+Description
+
+POST
+
+/api/auth/signup
+
+Register a new user or admin
+
+POST
+
+/api/auth/login
+
+Authenticate and receive a JWT
+
+GET
+
+/api/products
+
+Retrieve all listed products (public)
+
+POST
+
+/api/products
+
+Admin: Add a new product
+
+GET
+
+/api/cart
+
+User: Fetch cart contents
+
+POST
+
+/api/cart
+
+User: Add item to cart
+
+DELETE
+
+/api/cart/:id
+
+User: Remove item from cart
+
+POST
+
+/api/orders
+
+User: Place an order (checkout)
+
+7.4 Front-End Implementation
+The front-end was built entirely with React.js using functional components and React Hooks (useState,
+useEffect, useContext). Routing between pages was handled by react-router-dom. Global state such as
+the logged-in user and cart contents was managed using React Context API, avoiding the need for an
+external state management library.
+All styling was done using raw CSS (no frameworks such as Bootstrap or Tailwind). Custom CSS files
+were written for each component, ensuring full control over the visual design. Responsive design
+principles were applied to ensure the application renders correctly on both desktop and mobile screen
+sizes.
+
+Figure 3: Shop Page
+
+Figure 4: Cart Page
+
+Figure 5: Footer Page
+
+CHAPTER 8: TESTING & RESULTS
+8.1 Testing Approach
+The application was tested manually throughout the development process. Each feature was tested
+immediately after implementation to catch bugs early. Postman was used extensively to test the REST
+API endpoints independently of the front-end, verifying correct status codes, response payloads, and
+error handling.
+
+8.2 Test Cases
+N Test Case
+o
+.
+
+Expected Result
+
+Status
+
+1
+
+Admin signup with valid
+data
+
+Account created, success
+response
+
+Passed
+
+2
+
+Admin login with correct
+credentials
+
+JWT issued, dashboard
+accessible
+
+Passed
+
+3
+
+Admin adds a new product
+
+Product visible in catalogue
+
+Passed
+
+4
+
+User signup with valid data
+
+Account created
+successfully
+
+Passed
+
+5
+
+User login with correct
+credentials
+
+JWT issued, homepage
+accessible
+
+Passed
+
+6
+
+User views product
+catalogue
+
+All admin-listed products
+displayed
+
+Passed
+
+7
+
+User adds product to cart
+
+Product appears in cart with
+correct qty
+
+Passed
+
+8
+
+User updates item quantity
+in cart
+
+Quantity updated, total
+recalculated
+
+Passed
+
+9
+
+User removes item from cart
+
+Item removed from cart
+
+Passed
+
+1
+0
+
+User completes checkout
+
+Order recorded, success
+message shown
+
+Passed
+
+1
+1
+
+Login with wrong password
+
+401 error, appropriate
+message shown
+
+Passed
+
+1
+2
+
+Access protected route
+without token
+
+401 Unauthorised response
+
+Passed
+
+8.3 Results
+All twelve planned test cases passed successfully. The application demonstrated stable performance
+under typical usage conditions. Response times for API calls were within acceptable limits, and the
+React front-end re-rendered efficiently upon state changes.
+
+CHAPTER 9: CHALLENGES & LEARNINGS
+9.1 Challenges Encountered
+9.1.1 Role-Based Access Control
+One of the primary challenges was implementing a clean role-based access control (RBAC) system
+where admins and users have mutually exclusive capabilities. This required careful design of the JWT
+payload (embedding the role field) and writing Express.js middleware that checks the role before
+allowing access to admin-only routes.
+
+9.1.2 Synchronising Cart State
+Keeping the cart state synchronised between the React front-end and the MongoDB back-end —
+especially when a user adds or removes items rapidly — required thoughtful use of useEffect hooks and
+async state updates. Race conditions were mitigated by debouncing rapid successive API calls.
+
+9.1.3 Raw CSS Responsiveness
+Building a responsive layout using only raw CSS (without a framework) was considerably more
+involved than expected. Flexbox and CSS Grid were used extensively to achieve a layout that adapts
+gracefully to different screen sizes.
+
+9.2 Key Learnings
+•
+
+Gained deep understanding of the full-stack development cycle — from API design to UI
+implementation.
+•
+Learned how to structure a Node.js/Express.js application following the MVC
+(Model-View-Controller) pattern.
+• Developed proficiency in Mongoose schema design and MongoDB query patterns.
+• Improved React.js skills, particularly in state management with Context API and side-effect
+handling with useEffect.
+• Understood the importance of security best practices: password hashing, JWT expiry, and input
+validation.
+• Practised writing clean, modular code that is easy to maintain and extend.
+
+CHAPTER 10: CONCLUSION
+This internship at Simplilearn Solutions Pvt. Ltd., under the guidance of Dr. Yojna Arora (Associate
+Professor), provided an exceptional opportunity to apply the theoretical knowledge gained during the
+B.Tech. programme to a real-world software development project.
+The e-commerce website developed during this internship is a fully functional web application that
+supports two distinct user roles — admin and shopper. Administrators can sign up, log in, and list
+products for sale. Shoppers can sign up, log in, browse the product catalogue, add items to their cart, and
+complete a purchase through the checkout flow. The application was built using a modern technology
+stack comprising Node.js, Express.js, MongoDB, React.js, and raw CSS, reflecting industry-standard
+development practices.
+The project not only reinforced core concepts such as RESTful API design, NoSQL database modelling,
+and component-based front-end architecture but also exposed practical challenges such as managing
+authentication state across a full-stack application, designing clean RBAC middleware, and achieving
+responsive layouts with pure CSS.
+Overall, this internship was an immensely valuable experience that has significantly enhanced technical
+competency, professional readiness, and confidence in undertaking complex software development
+projects independently.
+
+REFERENCES
+1. Node.js Documentation. Available at: https://nodejs.org/en/docs/
+2. Express.js Official Guide. Available at: https://expressjs.com/
+3. MongoDB Documentation. Available at: https://www.mongodb.com/docs/
+4. Mongoose ODM Documentation. Available at: https://mongoosejs.com/docs/
+5. React.js Official Documentation. Available at: https://reactjs.org/docs/
+6. JSON Web Tokens (JWT) Introduction. Available at: https://jwt.io/introduction
+7. MDN Web Docs — CSS Reference. Available at: https://developer.mozilla.org/en-US/docs/Web/CSS
+8. Axios HTTP Client Documentation. Available at: https://axios-http.com/docs/intro
+9. Simplilearn Official Website. Available at: https://www.simplilearn.com
+
+

@@ -1,0 +1,3102 @@
+Tutorial given at WWW-2008,
+WWW 2008, April 21, 2008 in Beijing
+
+Opinion Mining & Summarization
+- Sentiment Analysis
+y
+Bing Liu
+Department of Computer Science
+University of Illinois at Chicago
+liub@cs.uic.edu
+http://www cs uic edu/~liub
+http://www.cs.uic.edu/~liub
+
+Introduction – facts and opinions
+ Two main types of textual information.
+
+
+F t and
+Facts
+d Opinions
+O i i
+
+ Most current information processing technique
+
+(e.g.,
+(e
+g search engines) work with facts (assume
+they are true)
+
+
+Facts can be expressed with topic keywords.
+
+ E.g., search engines do not search for opinions
+
+
+Opinions
+p
+are hard to express
+p
+with a few keywords
+y
+
+
+
+
+How do people think of Motorola Cell phones?
+
+Current search ranking strategy is not appropriate for
+opinion retrieval/search
+retrieval/search.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+2
+
+Introduction – user generated content
+
+
+Word-of-mouth on the Web
+One can express personal experiences and opinions on
+almost anything, at review sites, forums, discussion groups,
+blogs ... (called the user generated content
+content.))
+ They contain valuable information
+
+
+
+
+
+
+Web/global
+g
+scale: No longer
+g – one’s circle of friends
+
+Our interest: to mine opinions expressed in the usergenerated content
+An intellectually very challenging problem.
+ Practically very useful.
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+3
+
+Introduction – Applications
+
+
+
+
+
+
+
+
+Businesses and organizations: product and service benchmarking.
+Market intelligence
+intelligence.
+ Business spends a huge amount of money to find consumer
+sentiments and opinions.
+ Consultants,
+Consultants surveys and focused groups
+groups, etc
+Individuals: interested in other’s opinions when
+ Purchasing a product or using a service,
+ Finding opinions on political topics,
+Ads placements: Placing ads in the user-generated content
+ Place an ad when one praises a product
+product.
+ Place an ad from a competitor if one criticizes a product.
+Opinion retrieval/search: providing general search for opinions.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+4
+
+Two types of evaluation
+ Direct Opinions: sentiment expressions on
+
+some objects, e.g., products, events, topics,
+persons.
+E.g.,
+E
+g “the
+the picture quality of this camera is great”
+great
+ Subjective
+
+
+ Comparisons: relations expressing
+
+similarities or differences of more than one
+j
+Usually
+y expressing
+p
+g an ordering.
+g
+object.
+E.g., “car x is cheaper than car y.”
+ Objective or subjective.
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+5
+
+Opinion
+p
+search (Liu, Web Data Mining book, 2007)
+ Can y
+you search for opinions
+p
+as conveniently
+y
+
+as general Web search?
+ Whenever y
+you need to make a decision,, you
+y
+may want some opinions from others,
+
+
+Wouldn’t it be nice? yyou can find them on a search
+system instantly, by issuing queries such as
+
+
+
+Opinions: “Motorola cell phones”
+C
+Comparisons:
+i
+“M
+“Motorola
+t l vs. N
+Nokia”
+ki ”
+
+ Cannot be done yet! Very hard!
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+6
+
+Typical
+yp
+opinion
+p
+search queries
+q
+
+
+Find the opinion
+p
+of a p
+person or organization
+g
+((opinion
+p
+holder) on a particular object or a feature of the object.
+
+
+
+
+E.g., what is Bill Clinton’s opinion on abortion?
+
+Find positive and/or negative opinions on a particular
+object (or some features of the object), e.g.,
+customer opinions on a digital camera
+camera.
+ public opinions on a political topic.
+
+
+Find how opinions
+p
+on an object
+j
+change
+g over time.
+ How object A compares with Object B?
+
+
+
+
+Gmail vs. Hotmail
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+7
+
+Find the opinion of a person on X
+ In some cases
+cases, the general search engine
+
+can handle it, i.e., using suitable keywords.
+
+
+Bill Clinton’s
+Clinton s opinion on abortion
+
+ Reason:
+
+One person or organization usually has only one
+opinion on a particular topic.
+ The opinion
+p
+is likely
+y contained in a single
+g
+document.
+ Thus, a good keyword query may be sufficient.
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+8
+
+Find opinions on an object
+We use product reviews as an example:
+Searching for opinions in product reviews is different
+from general Web search.
+ E.g.,
+g , search for opinions
+p
+on “Motorola RAZR V3”
+ General Web search (for a fact): rank pages
+according to some authority and relevance scores.
+
+
+The user views
+Th
+i
+the
+th first
+fi t page (if th
+the search
+h iis perfect).
+f t)
+ One fact = Multiple facts
+
+
+
+
+Opinion
+p
+search: rank is desirable,, however
+reading only the review ranked at the top is not appropriate
+because it is only the opinion of one person.
+ One opinion ≠ Multiple opinions
+
+
+Bing Liu, UIC
+
+9
+
+WWW-2008 Tutorial
+
+Search opinions (contd)
+
+
+Ranking:
+
+
+produce
+d
+two rankings
+ki
+
+
+
+
+
+Or, one ranking but
+
+
+
+
+Positive opinions and negative opinions
+Some kind of summary
+y of both, e.g.,
+g # of each
+The top (say 30) reviews should reflect the natural distribution
+of all reviews (assume that there is no spam)
+spam), ii.e.,
+e with the
+right balance of positive and negative reviews.
+
+Questions:
+Should the user reads all the top reviews? OR
+ Should the system prepare a summary of the reviews?
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+10
+
+Reviews are similar to surveys
+ Reviews can be regarded as traditional
+
+surveys.
+In traditional survey, returned survey forms are
+treated
+d as raw d
+data.
+ Analysis is performed to summarize the survey
+results.
+results
+
+
+
+
+E.g., % against or for a particular issue, etc.
+
+ In opinion search,
+search
+
+Can a summary be produced?
+ What should the summary be?
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+11
+
+Roadmap
+ Opinion mining – the abstraction
+ Document level sentiment classification
+ Sentence level sentiment analysis
+ Feature-based opinion mining and
+
+summarization
+ Comparative sentence and relation
+extraction
+ Opinion spam
+ Summary
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+12
+
+Opinion mining – the abstraction
+(Hu and Liu, KDD-04; Liu, Web Data Mining book 2007)
+
+
+Basic components of an opinion
+Opinion holder: The person or organization that holds a
+specific opinion on a particular object.
+ Object:
+Obj t on which
+hi h an opinion
+i i iis expressed
+d
+ Opinion: a view, attitude, or appraisal on an object from an
+opinion holder.
+
+
+
+
+Objectives of opinion mining: many ...
+
+
+
+Let us abstract the problem
+
+
+
+
+put existing research into a common framework
+
+We use consumer reviews of products to develop the
+ideas Other opinionated contexts are similar
+ideas.
+similar.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+13
+
+Object/entity
+
+
+Definition (object): An object O is an entity which
+can be a product, person, event, organization, or
+topic. O is represented as
+a hierarchy of components, sub-components, and so on.
+ Each node represents a component and is associated with a
+set of attributes of the component.
+ O is the root node (which also has a set of attributes)
+
+
+An opinion can be expressed on any node or attribute
+of the node.
+ To simplify our discussion, we use “features” to
+represent both components and attributes
+attributes.
+
+
+
+
+
+
+The term “feature” should be understood in a broad sense,
+ Product feature, topic or sub-topic, event or sub-event, etc
+
+N t the
+Note:
+th object
+bj t O itself
+it lf iis also
+l a ffeature.
+t
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+14
+
+Model of a review
+An object O is represented with a finite set of features,
+F = {f1, f2, …, fn}.
+}
+
+
+
+Each feature fi in F can be expressed with a finite set of words
+or phrases Wi, which are synonyms.
+That is to say: we have a set of corresponding synonym sets W =
+{W1, W2, …, Wn} for the features.
+
+
+Model of a review: An opinion holder j comments on a
+subset of the features Sj ⊆ F of object O.
+
+
+
+
+
+For each feature fk ∈ Sj that j comments on, he/she
+
+chooses a word or phrase from Wk to describe the
+feature, and
+ expresses
+p
+ap
+positive,, negative
+g
+or neutral opinion
+p
+on fk.
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+15
+
+Opinion mining tasks
+
+
+At the document (or review) level:
+Task: sentiment classification of reviews
+
+
+
+
+
+Classes: positive, negative, and neutral
+Assumption: each document (or review) focuses on a single
+object (not true in many discussion posts) and contains
+opinion from a single opinion holder.
+
+At the sentence level:
+T k 1:
+Task
+1 identifying
+id tif i subjective/opinionated
+bj ti / i i
+t d sentences
+t
+
+
+Classes: objective and subjective (opinionated)
+
+Task 2: sentiment classification of sentences
+
+
+
+Classes: positive, negative and neutral.
+Assumption: a sentence contains only one opinion
+
+
+
+Bing Liu, UIC
+
+not true in many cases.
+
+Then we can also consider clauses or phrases.
+WWW-2008 Tutorial
+
+16
+
+Opinion mining tasks (contd)
+
+
+At the feature level:
+Task 1: Identify and extract object features that have been
+commented on by an opinion holder (e.g., a reviewer).
+Task 2: Determine whether the opinions on the features are
+positive, negative or neutral.
+Task 3: Group feature synonyms.
+
+
+
+
+Produce a feature-based opinion summary of multiple
+reviews (more on this later).
+
+Opinion
+O
+i i h
+holders:
+ld
+id tif h
+identify
+holders
+ld
+iis also
+l useful,
+f l e.g.,
+in news articles, etc, but they are usually known in
+the
+e use
+user ge
+generated
+e a ed co
+content,
+e , i.e.,
+e , au
+authors
+oso
+of the
+e pos
+posts.
+s
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+17
+
+More at the feature level
+ Problem 1: Both F and W are unknown.
+
+
+We need to perform all three tasks:
+
+ Problem 2: F is known but W is unknown.
+
+
+All three tasks are still needed. Task 3 is easier. It
+becomes the problem of matching the discovered
+features with the set of given features F.
+F
+
+ Problem 3: W is known (F is known too).
+
+
+Onlyy task 2 is needed.
+
+F: the set of features
+W: synonyms of each feature
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+18
+
+Roadmap
+ Opinion mining – the abstraction
+ Document level sentiment classification
+ Sentence level sentiment analysis
+ Feature-based opinion mining and
+
+summarization
+ Comparative sentence and relation
+extraction
+ Opinion spam
+ Summary
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+19
+
+Sentiment classification
+
+
+Classify documents (e.g., reviews) based on the
+overall sentiments expressed by opinion holders
+(authors),
+Positive,, negative,
+g
+, and (possibly)
+(p
+y) neutral
+ Since in our model an object O itself is also a feature, then
+sentiment classification essentially determines the opinion
+expressed on O in each document (e
+(e.g.,
+g review)
+review).
+
+
+
+
+Similar but different from topic-based text
+classification.
+In topic-based text classification, topic words are important.
+ In sentiment classification, sentiment words are more
+important e.g.,
+important,
+e g great
+great, excellent,
+excellent horrible
+horrible, bad
+bad, worst
+worst, etc
+etc.
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+20
+
+Unsupervised review classification
+(Turney, ACL-02)
+ Data: reviews from epinions
+epinions.com
+com on
+
+automobiles, banks, movies, and travel
+destinations.
+ The approach: Three steps
+ Step 1:
+Part-of-speech tagging
+ Extracting two consecutive words (two-word
+phrases) from reviews if their tags conform to
+some given patterns, e.g., (1) JJ, (2) NN.
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+21
+
+ Step 2: Estimate the semantic orientation
+
+(SO) of the extracted phrases
+
+
+Use Pointwise mutual information
+⎛ P( word1 ∧ word 2 ) ⎞
+⎟⎟
+PMI ( word1 , word 2 ) = log 2 ⎜⎜
+P
+(
+word
+)
+P
+(
+word
+)
+1
+2 ⎠
+⎝
+
+
+
+Semantic orientation (SO):
+SO(phrase) = PMI(phrase, “excellent”)
+- PMI(phrase, “poor”)
+
+
+
+Using AltaVista near operator to do search to find
+the number of hits to compute PMI and SO
+SO.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+22
+
+ Step 3: Compute the average SO of all
+
+phrases
+
+
+classify the review as recommended if average
+SO is positive, not recommended otherwise.
+
+ Final classification accuracy:
+
+automobiles - 84%
+ banks - 80%
+ movies - 65.83
+ travel destinations - 70.53%
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+23
+
+Sentiment classification using machine
+learning methods (Pang et al, EMNLP-02)
+ This paper directly applied several machine
+
+learning techniques to classify movie reviews
+into positive and negative.
+ Three classification techniques were tried:
+Naïve Bayes
+ Maximum entropy
+ Support vector machine
+
+
+ Pre-processing
+P
+i settings:
+tti
+negation
+ti tag,
+t
+unigram
+i
+
+(single words), bigram, POS tag, position.
+ SVM: the best accuracy 83% (unigram)
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+24
+
+Review classification by scoring features
+(Dave, Lawrence and Pennock, WWW-03)
+
+
+It first selects a set of features F = f1, f2, ……
+
+
+
+
+score( f i ) =
+
+Score the features
+
+
+
+
+Note: machine learning features, but product features.
+
+C and C’ are classes
+
+Classification of a
+review dj (using sign):
+
+
+
+P( f i | C ) − P( f i | C ' )
+P( f i | C ) + P( f i | C ' )
+
+⎧ C eval ( d j ) > 0
+class ( d j ) = ⎨
+⎩C ' eval ( d j ) < 0
+eval ( d j ) = ∑ score ( f i )
+
+Accuracy of 84-88%
+84 88%.
+
+Bing Liu, UIC
+
+i
+
+WWW-2008 Tutorial
+
+25
+
+Other related works
+Using PMI, syntactic relations and other attributes with
+SVM (Mullen and Collier, EMNLP-04).
+EMNLP 04).
+ Sentiment classification considering rating scales (Pang
+and Lee, ACL-05).
+ Comparing supervised and unsupervised methods
+(Chaovalit and Zhou, HICSS-05)
+ Using semi-supervised learning (Goldberg and Zhu,
+Workshop on TextGraphs
+TextGraphs, at HLT-NAAL-06)
+HLT NAAL 06).
+ Review identification and sentiment classification of
+reviews (Ng, Dasgupta and Arifin, ACL-06).
+ Sentiment classification on customer feedback data
+(Gamon, Coling-04).
+ Comparative experiments (Cui et al. AAAI-06)
+ Many more …
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+26
+
+Roadmap
+ Opinion mining – the abstraction
+ Document level sentiment classification
+ Sentence level sentiment analysis
+ Feature-based opinion mining and
+
+summarization
+ Comparative sentence and relation
+extraction
+ Opinion spam
+ Summary
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+27
+
+Sentence-level sentiment analysis
+Document level sentiment classification is too coarse
+Document-level
+for most applications.
+ Let us move to the sentence level.
+ Much of the work on sentence level sentiment
+analysis focuses on identifying subjective sentences
+i news articles.
+in
+ti l
+
+
+Classification: objective and subjective.
+ All techniques use some forms of machine learning.
+ E.g., using a naïve Bayesian classifier with a set of data
+features/attributes extracted from training sentences (Wiebe
+et al.
+al ACL-99).
+ACL 99)
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+28
+
+Using learnt patterns (Rilloff and Wiebe, EMNLP-03)
+
+
+A bootstrapping approach.
+
+
+A high
+hi h precision
+i i classifier
+l
+ifi is
+i fifirst used
+d to automatically
+i ll
+identify some subjective and objective sentences.
+
+
+Two high precision (but low recall) classifiers are used,
+
+
+
+
+
+
+A set of patterns are then learned from these identified
+subjective and objective sentences.
+
+
+
+
+a high precision subjective classifier
+A high precision objective classifier
+Based on manually collected lexical items, single words and ngrams which are good subjective clues
+grams,
+clues.
+
+Syntactic templates are provided to restrict the kinds of patterns
+to be discovered, e.g., <subj> passive-verb.
+
+The learned patterns are then used to extract more subject
+and objective sentences (the process can be repeated).
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+29
+
+Subjectivity and polarity (orientation)
+(Yu and Hazivassiloglou, EMNLP-03)
+
+
+For subjective or opinion sentence identification, three
+methods are tried
+tried:
+Sentence similarity.
+ Naïve Bayesian
+y
+classification.
+ Multiple naïve Bayesian (NB) classifiers.
+
+
+
+
+For opinion orientation (positive, negative or neutral)
+(also called polarity) classification,
+classification it uses a similar
+method to (Turney, ACL-02), but
+with more seed words (rather than two) and based on loglik lih d ratio
+likelihood
+ti (LLR)
+(LLR).
+ For classification of each word, it takes the average of LLR
+scores of words in the sentence and use cutoffs to decide
+positive,
+iti
+negative
+ti or neutral.
+t l
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+30
+
+Other related work
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Consider gradable adjectives (Hatzivassiloglou and Wiebe, Coling00)
+Semi-supervised learning with the initial training set identified by
+some strong patterns and then applying NB or self-training (Wiebe
+and Riloff, CICLing-05).
+Finding strength of opinions at the clause level (Wilson et al. AAAI04).
+Sum up orientations of opinion words in a sentence (or within some
+word
+d window)
+i d ) (Ki
+(Kim and
+dH
+Hovy, COLING
+COLING-04).
+04)
+Find clause or phrase polarities based on priori opinion words and
+classification (Wilson et al. EMNLP-05)
+S i
+Semi-supervised
+i d llearning
+i tto classify
+l
+if sentences
+t
+iin reviews
+i
+(G
+(Gamon
+et al. IDA-05).
+Sentiment sentence retrieval (Eguchi and Lavrendo, EMNLP-06)
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+31
+
+Let us go further?
+
+
+Sentiment classification at both document and
+sentence (or clause) levels are useful, but
+
+
+
+
+An negative sentiment on an object
+
+
+
+
+does not mean that the opinion holder dislikes everything
+about the object.
+object
+
+A positive sentiment on an object
+
+
+
+
+They do not find what the opinion holder liked and disliked.
+
+does not mean that the opinion holder likes everything about
+the object.
+
+We need to g
+go to the feature level.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+32
+
+But before we go further
+
+
+Let us discuss Opinion Words or Phrases (also
+called polar words
+words, opinion bearing words
+words, etc)
+etc). E
+E.g.,
+g
+Positive: beautiful, wonderful, good, amazing,
+ Negative: bad, poor, terrible, cost someone an arm and a leg
+(idiom).
+(idiom)
+
+
+They are instrumental for opinion mining (obviously)
+ Three main ways to compile such a list:
+
+
+Manual approach: not a bad idea, only an one-time effort
+ Corpus-based approaches
+ Dictionary-based approaches
+
+
+
+
+Important to note:
+Some opinion words are context independent (e.g., good).
+ Some are context dependent (e
+(e.g.,
+g long)
+long).
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+33
+
+Corpus-based approaches
+
+
+Rely on syntactic or co-occurrence patterns in large
+corpora. (Hazivassiloglou and McKeown, ACL-97; Turney, ACL02; Yu and Hazivassiloglou, EMNLP-03; Kanayama and Nasukawa,
+EMNLP-06; Ding and Liu SIGIR-07)
+
+
+
+
+Can fifind
+C
+dd
+domain
+i ((nott context!)
+t t!) dependent
+d
+d t orientations
+i t ti
+(positive, negative, or neutral).
+
+(Turney, ACL-02) and (Yu and Hazivassiloglou,
+EMNLP-03) are similar.
+Assign opinion orientations (polarities) to words/phrases.
+ (Yu and Hazivassiloglou,
+Hazivassiloglou EMNLP-03)
+EMNLP 03) is different from
+(Turney, ACL-02)
+ use more seed words (rather than two) and use loglikelihood ratio (rather than PMI).
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+34
+
+Corpus-based approaches (contd)
+
+
+Use constraints (or conventions) on connectives to identify
+opinion words (Hazivassiloglou and McKeown, ACL-97; Kanayama
+and Nasukawa, EMNLP-06; Ding and Liu, 2007). E.g.,
+
+
+
+Conjunction: conjoined adjectives usually have the same
+orientation (Hazivassiloglou and McKeown, ACL-97).
+
+
+
+
+
+
+AND, OR,
+AND
+OR BUT,
+BUT EITHER-OR,
+EITHER OR and NEITHER-NOR
+NEITHER NOR have similar
+constraints.
+Learning using
+
+
+
+
+
+E.g., “This car is beautiful and spacious.” (conjunction)
+
+log-linear
+log
+linear model: determine if two conjoined adjectives are of the same or
+different orientations.
+Clustering: produce two sets of words: positive and negative
+
+Corpus: 21 million word 1987 Wall Street Journal corpus
+corpus.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+35
+
+Corpus-based approaches (contd)
+
+
+(Kanayama and Nasukawa, EMNLP-06) takes a
+similar approach to (Hazivassiloglou and McKeown,
+ACL 97) but for Japanese words:
+ACL-97)
+Instead of using learning, it uses two criteria to determine
+whether to add a word to positive or negative lexicon.
+ Have an initial seed lexicon of positive and negative words
+words.
+
+
+
+
+(Ding and Liu, 2007) also exploits constraints on
+connectives, but with two differences
+
+
+IIt uses them
+h
+to assign
+i opinion
+i i orientations
+i
+i
+to product
+d
+features (more on this later).
+
+
+One word may indicate different opinions in the
+same domain
+domain.
+
+
+
+
+
+“The battery life is long” (+) and “It takes a long time to focus” (-).
+
+Find domain opinion words is insufficient.
+
+It can be used without a large corpus
+corpus.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+36
+
+Dictionary-based approaches
+
+
+Typically use WordNet’s synsets and hierarchies to
+acq ire opinion words
+acquire
+ords
+Start with a small seed set of opinion words.
+ Use the set to search for synonyms
+y
+y
+and antonyms
+y
+in
+WordNet (Hu and Liu, KDD-04; Kim and Hovy, COLING-04).
+ Manual inspection may be used afterward.
+
+
+Use additional information (e
+(e.g.,
+g glosses) from
+WordNet (Andreevskaia and Bergler, EACL-06) and
+learning (Esuti and Sebastiani, CIKM-05).
+ Weakness
+W k
+off the
+th approach:
+h Do
+D nott find
+fi d context
+t t
+dependent opinion words, e.g., small, long, fast.
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+37
+
+Roadmap
+ Opinion mining – the abstraction
+ Document level sentiment classification
+ Sentence level sentiment analysis
+ Feature-based opinion mining and
+
+summarization
+ Comparative sentence and relation
+extraction
+ Opinion spam
+ Summary
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+38
+
+Feature-based opinion mining and
+summarization (Hu and Liu, KDD-04)
+Again focus on reviews (easier to work in a concrete
+domain!)
+ Objective: find what reviewers (opinion holders)
+liked and disliked
+
+
+
+
+
+
+Product features and opinions on the features
+
+Since the number of reviews on an object can be
+large, an opinion summary should be produced.
+Desirable to be a structured summary
+summary.
+ Easy to visualize and to compare.
+ Analogous to but different from multi-document
+summarization
+summarization.
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+39
+
+The tasks
+ Recall the three tasks in our model.
+
+Task 1: Extract object features that have been
+commented on in each review.
+Task 2: Determine whether the opinions on the
+features are positive, negative or neutral.
+T k 3:
+Task
+3 Group
+G
+feature
+f t
+synonyms.
+ Produce a summary
+ Task
+T k 2 may nott be
+b needed
+d dd
+depending
+di on th
+the
+
+format of reviews.
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+40
+
+Different review format
+Format 1 - Pros, Cons and detailed review: The
+reviewer
+i
+iis asked
+k d tto d
+describe
+ib P
+Pros and
+dC
+Cons
+separately and also write a detailed review.
+Epinions com uses this format.
+Epinions.com
+format
+Format 2 - Pros and Cons: The reviewer is
+asked
+k d tto describe
+d
+ib P
+Pros and
+dC
+Cons separately.
+t l
+Cnet.com used to use this format.
+F
+Format
+t 3 - free
+f
+format:
+f
+t The
+Th reviewer
+i
+can write
+it
+freely, i.e., no separation of Pros and Cons.
+Amazon com uses this format
+Amazon.com
+format.
+Bing Liu, UIC
+
+41
+
+WWW-2008 Tutorial
+
+Format 1
+
+Format 2
+
+Format 3
+GREAT Camera., Jun 3, 2004
+Reviewer: jprice174 from Atlanta, Ga.
+I did a lot of research last year before I bought
+this camera... It kinda hurt to leave behind my
+beloved nikon 35mm SLR, but I was going to
+Italy, and I needed something smaller, and
+digital.
+The pictures coming out of this camera are
+amazing. The 'auto' feature takes great
+pictures most of the time. And with digital,
+you're
+you
+re not wasting film if the picture doesn't
+doesn t
+come out.
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+42
+
+Feature-based opinion summary (Hu and Liu,
+KDD-04)
+
+Feature Based Summary:
+
+GREAT Camera., Jun 3, 2004
+Reviewer: jprice174 from Atlanta,
+Ga.
+I did a lot of research last year
+before I bought this camera...
+camera It
+kinda hurt to leave behind my
+beloved nikon 35mm SLR, but I
+was going to Italy, and I needed
+something smaller,
+smaller and digital.
+digital
+The pictures coming out of this
+camera are amazing. The 'auto'
+feature takes great pictures
+mostt off the
+th time.
+ti
+A d with
+And
+ith
+digital, you're not wasting film if
+the picture doesn't come out. …
+
+picture
+Feature1: p
+Positive: 12
+
+The pictures coming out of this camera
+are amazing.
+
+Overall this is a good camera with a
+really
+ll good
+d picture
+i t
+clarity.
+l it
+…
+Negative: 2
+
+The pictures come out hazy if your
+hands shake even for a moment
+during the entire process of taking a
+picture.
+
+Focusing on a display rack about 20
+feet away in a brightly lit room during
+day time,
+time pictures produced by this
+camera were blurry and in a shade of
+orange.
+Feature2: battery life
+…
+
+….
+Bing Liu, UIC
+
+
+
+43
+
+WWW-2008 Tutorial
+
+Visual summarization & comparison
++
+Summary of
+reviews of
+Digital camera 1
+
+_
+Picture
+
+
+Comparison of
+reviews of
+
+Battery
+
+Zoom
+
+Size
+
+Weight
+
++
+
+Digital camera 1
+Digital camera 2
+
+_
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+44
+
+Feature extraction from Pros and Cons of
+Format 1 (Liu et al WWW-03; Hu and Liu, AAAI-CAAW-05)
+
+
+Observation: Each sentence segment in Pros or
+Cons contains only one feature. Sentence segments
+can be separated by commas, periods, semi-colons,
+hyphens, ‘&’’s, ‘and’’s, ‘but’’s, etc.
+
+Pros in Example 1 can be separated into 3 segments:
+great photos
+<photo>
+easy to use
+<use>
+very small
+<small> ⇒ <size>
+ Cons can be separated into 2 segments:
+battery usage
+<battery>
+included memory is stingy <memory>
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+45
+
+Extraction using label sequential rules
+Label sequential rules (LSR) are a special kind of
+sequential patterns
+patterns, discovered from sequences
+sequences.
+ LSR Mining is supervised (Liu’s Web mining book 2006).
+ The training data set is a set of sequences,
+sequences e
+e.g.,
+g
+“Included memory is stingy”
+is turned into a sequence with POS tags
+tags.
+
+
+〈{included, VB}{memory, NN}{is, VB}{stingy, JJ}〉
+
+then turned into
+〈{included, VB}{$feature, NN}{is, VB}{stingy, JJ}〉
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+46
+
+Using LSRs for extraction
+ Based on a set of training sequences, we can
+
+mine label sequential rules
+rules, e
+e.g.,
+g
+〈{easy, JJ }{to}{*, VB}〉 → 〈{easy, JJ}{to}{$feature, VB}〉
+[sup = 10%,
+% conff = 95%]
+%
+
+Feature Extraction
+Only the right hand side of each rule is needed.
+ The word in the sentence segment of a new review
+th t matches
+that
+t h $feature
+$f t
+i extracted.
+is
+t t d
+ We need to deal with conflict resolution also
+(multiple rules are applicable.
+applicable
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+47
+
+Extraction of features of formats 2 and 3
+ Reviews of these formats are usually
+
+complete sentences
+e.g., “the pictures are very clear.”
+
+
+Explicit feature: picture
+
+ “It is small enough to fit easily in a coat
+
+pocket
+k t or purse.””
+
+
+Implicit feature: size
+
+ Extraction: Frequency based approach
+
+Frequent features
+ Infrequent features
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+48
+
+Frequency based approach
+(Hu and Liu, KDD-04; Liu, Web Data Mining book 2007)
+Frequent features: those features that have been talked
+about by many reviewers.
+ Use sequential pattern mining
+ Why
+Wh th
+the ffrequency based
+b
+d approach?
+h?
+ Different reviewers tell different stories (irrelevant)
+ When product features are discussed, the words that
+they use converge.
+ They are main features.
+
+
+
+
+S
+Sequential
+pattern mining ffinds frequent
+f
+phrases.
+
+
+
+Froogle has an implementation of the approach (no POS
+es c o )
+restriction).
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+49
+
+Using part-of relationship and the Web
+(Popescu and Etzioni, EMNLP-05)
+Improved (Hu and Liu, KDD-04) by removing those
+frequent noun phrases that may not be features:
+better precision (a small drop in recall).
+ It identifies
+id tifi part-of
+t f relationship
+l ti
+hi
+
+
+Each noun phrase is given a pointwise mutual information
+score between the p
+phrase and p
+part discriminators
+associated with the product class, e.g., a scanner class.
+ The part discriminators for the scanner class are, “of
+scanner”, “scanner
+scanner
+scanner has”
+has , “scanner
+scanner comes with”
+with , etc,
+etc which
+are used to find components or parts of scanners by
+searching on the Web: the KnowItAll approach, (Etzioni et
+al WWW
+al,
+WWW-04).
+04)
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+50
+
+Infrequent features extraction
+How to find the infrequent features?
+ Observation:
+Ob
+ti
+th
+the same opinion
+i i word
+d can b
+be used
+d
+to describe different features and objects.
+
+
+“The p
+pictures are absolutely
+y amazing.”
+g
+ “The software that comes with it is amazing.”
+
+
+ Frequent
+
+ Infrequent
+
+features
+
+features
+ Opinion
+p
+words
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+51
+
+Identify feature synonyms
+Liu et al (WWW-05) made an attempt using only
+WordNet.
+WordNet
+ Carenini et al (K-CAP-05) proposed a more
+sophisticated method based on several similarity
+metrics, but it requires a taxonomy off features
+f
+to be
+given.
+
+
+The system
+y
+merges
+g each discovered feature to a feature
+node in the taxonomy.
+ The similarity metrics are defined based on string similarity,
+synonyms
+y
+y
+and other distances measured using
+g WordNet.
+ Experimental results based on digital camera and DVD
+reviews show promising results.
+
+
+
+
+Many ideas in information integration are applicable.
+applicable
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+52
+
+Identify opinion orientation on feature
+For each feature, we identify the sentiment or opinion
+orientation expressed by a reviewer.
+ We work based on sentences, but also consider,
+
+
+A sentence can contain multiple features.
+ Different features may have different opinions
+opinions.
+ E.g., The battery life and picture quality are great (+), but the
+view founder is small (-).
+
+
+
+
+Almost all approaches make use of opinion words
+and phrases. But notice again:
+Some opinion words have context independent orientations,
+e g “great”
+e.g.,
+great .
+ Some other opinion words have context dependent
+orientations, e.g., “small”
+
+
+
+
+Many ways to use them
+them.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+53
+
+Aggregation of opinion words
+(H and
+(Hu
+d Li
+Liu, KDD
+KDD-04;
+04 Di
+Ding andd Liu,
+Li 2008)
+
+
+
+
+
+
+Input: a pair (f, s), where f is a product feature and s is a
+sentence
+t
+that
+th t contains
+t i f.
+f
+Output: whether the opinion on f in s is positive, negative, or
+neutral.
+Two steps:
+ Step 1: split the sentence if needed based on BUT words
+(but, except that, etc).
+ Step 2: work on the segment sf containing f.
+f Let the set of
+opinion words in sf be w1, .., wn. Sum up their orientations
+(1, -1, 0), and assign the orientation to (f, s) accordingly.
+w .o
+n
+In ((Ding
+g et al,, WSDM-08),
+), step
+p 2 is changed
+g to
+∑i=1 d (wi , f )
+i
+with better results. wi.o is the opinion orientation of wi. d(wi, f)
+is the distance from f to wi.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+54
+
+Context dependent
+p
+opinions
+p
+
+
+Popescu and Etzioni (EMNLP-05) used
+constraints of connectives in (Hazivassiloglou and McKeown,
+ACL-97), and some additional constraints, e.g.,
+morphological relationships, synonymy and antonymy, and
+ relaxation labeling to propagate opinion orientations to words
+and features.
+
+
+
+
+Ding et al (2008) used
+constraints of connectives both at intra-sentence and intersentence levels, and
+ additional constraints of
+of, e
+e.g.,
+g TOO
+TOO, BUT
+BUT, NEGATION
+NEGATION, ….
+
+
+to directly assign opinions to (f, s) with good results (>
+0.85 of F-score).
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+55
+
+Some other related work
+Morinaga et al. (KDD-02).
+ Yi et al
+al. (ICDM-03)
+(ICDM 03)
+ Kobayashi et al. (AAAI-CAAW-05)
+ Ku et al.
+al (AAAI
+(AAAI-CAAW-05)
+CAAW 05)
+ Carenini et al (EACL-06)
+ Kim and Hovy (ACL-06a)
+ Kim and Hovy (ACL-06b)
+ Eguchi and Lavrendo (EMNLP-06)
+ Zhuang et al (CIKM-06)
+ Mei et al (WWW-2007)
+ Many
+M
+more
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+56
+
+Roadmap
+ Opinion mining – the abstraction
+ Document level sentiment classification
+ Sentence level sentiment analysis
+ Feature-based opinion mining and
+
+summarization
+ Comparative sentence and relation
+extraction
+ Opinion spam
+ Summary
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+57
+
+Extraction of Comparatives
+(Jinal and Liu, SIGIR-06, AAAI-06; Liu’s Web Data Mining book)
+
+
+Recall: Two types of evaluation
+Direct opinions: “This car is bad”
+ Comparisons: “Car X is not as good as car Y”
+
+
+They use different language constructs.
+ Direct expression of sentiments are good.
+C
+Comparison
+i
+may b
+be b
+better.
+tt
+
+
+
+
+
+
+Good or bad, compared to what?
+
+Comparative Sentence Mining
+Identify comparative sentences, and
+ extract comparative
+p
+relations from them.
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+58
+
+Linguistic Perspective
+
+
+Comparative sentences use morphemes like
+
+
+
+
+more/most, -er/-est
+er/ est, less/least and as.
+
+than and as are used to make a ‘standard’ against
+which an entity is compared.
+
+Limitations
+
+
+Li it d coverage
+Limited
+
+
+
+
+Non-comparatives
+Non
+comparatives with comparative words
+
+
+
+
+Ex: “In market capital, Intel is way ahead of Amd”
+Ex1: “In the context of speed, faster means better”
+
+For human consumption; no computational methods
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+59
+
+Types of Comparatives: Gradable
+
+
+Gradable
+ Non
+Non-Equal
+Equal Gradable: Relations of the type greater or
+less than
+ Keywords like better, ahead, beats, etc
+ Ex: “optics of camera A is better than that of camera B”
+
+
+
+Equative: Relations of the type equal to
+ Keywords and phrases like equal to, same as, both, all
+ Ex: “camera A and camera B both come in 7MP”
+
+
+
+Superlative: Relations of the type greater or less than
+allll others
+th
+ Keywords and phrases like best, most, better than all
+ Ex: “camera A is the cheapest
+p
+camera available in market”
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+60
+
+Types of comparatives: non-gradable
+Non Gradable: Sentences that compare
+Non-Gradable:
+features of two or more objects, but do not
+grade them. Sentences which imply:
+g
+py
+
+
+
+
+
+
+
+
+
+Bing Liu, UIC
+
+Object A is similar to or different from Object B
+with regard to some features.
+Object A has feature F1, Object B has feature F2
+(F1 and F2 are usually substitutable).
+Object A has feature F, but object B does not
+have.
+
+WWW-2008 Tutorial
+
+61
+
+Comparative Relation: gradable
+
+
+Definition: A gradable comparative relation
+captures the essence of a gradable comparative
+sentence and is represented with the following:
+(relationWord, features, entityS1, entityS2, type)
+relationWord: The keyword used to express a
+comparative relation in a sentence
+sentence.
+ features: a set of features being compared.
+ entityS1 and entityS2: Sets of entities being
+compared.
+ type: non-equal gradable, equative or superlative.
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+62
+
+Examples: Comparative relations
+
+
+Ex1: “car X has better controls than car Y”
+(relationWord = better, features = controls, entityS1 = car X,
+entityS2 = car Y, type = non-equal-gradable)
+
+
+
+Ex2: “car X and car Y have equal
+q
+mileage”
+g
+(relationWord = equal, features = mileage, entityS1 = car X,
+entityS2 = car Y, type = equative)
+
+
+
+Ex3: “Car
+Car X is cheaper than both car Y and car Z”
+Z
+(relationWord = cheaper, features = null, entityS1 = car X, entityS2
+= {car Y, car Z}, type = non-equal-gradable )
+
+
+
+Ex4: “company
+company X produces a variety of cars
+cars, but still
+best cars come from company Y”
+(relationWord = best, features = cars, entityS1 = company Y,
+entityS2 = null, type = superlative)
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+63
+
+Tasks
+Given a collection of evaluative texts
+Task 1: Identify comparative sentences.
+Task 2: Categorize different types of
+comparative sentences.
+T k 2:
+Task
+2 Extract
+E t t comparative
+ti relations
+l ti
+from
+f
+the
+th
+sentences.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+64
+
+Identify comparative sentences
+(Jinal and Liu, SIGIR-06)
+
+Keyword
+y
+strategy
+gy
+An observation: It is easy to find a small set of
+keywords that covers almost all comparative
+sentences,, i.e.,, with a veryy high
+g recall and a
+reasonable precision
+ We have compiled a list of 83 keywords used in
+comparative sentences,
+sentences which includes:
+
+
+Words with POS tags of JJR, JJS, RBR, RBS
+ POS tags are used as keyword instead of individual
+words.
+ Exceptions: more, less, most and least
+ Other indicative words like beat, exceed, ahead, etc
+ Phrases like in the lead
+lead, on par with,
+with etc
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+65
+
+2-step learning strategy
+ Step1:
+p Extract sentences which contain at
+
+least a keyword (recall = 98%, precision =
+32% on our data set for gradables)
+ Step2: Use the naïve Bayes (NB) classifier to
+y sentences into two classes
+classify
+comparative and non-comparative.
+ Attributes: class sequential rules (CSRs)
+generated from sentences in step1, e.g.,
+
+
+〈{1}{3}{7, 8}〉 → classi [sup = 2/5, conf = 3/4]
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+66
+
+1. Sequence data preparation
+Use words within radius r of a keyword to form a
+sequence (words are replaced with POS tags)
+ ….
+
+
+2. CSR generation
+Use diff
+U
+differentt minimum
+i i
+supports
+t ffor diff
+differentt
+keywords (multiple minimum supports)
+ 13 manual rules
+rules, which were hard to generate
+automatically.
+
+
+3 Learning using a NB classifier
+3.
+
+
+Use CSRs and manual rules as attributes to build
+a final classifier.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+67
+
+Classify different types of comparatives
+ Classify comparative sentences into three
+
+types: non-equal gradable, equative, and
+superlative
+SVM learner gave the best result.
+ Attribute set is the set of keywords
+keywords.
+ If the sentence has a particular keyword in the
+attribute set, the corresponding value is 1,
+and 0 otherwise.
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+68
+
+Extraction of comparative relations
+(Jindal and Liu, AAAI-06; Liu’s Web mining book 2006)
+
+Assumptions
+ There is only one relation in a sentence.
+ Entities and features are nouns (
+(includes nouns,
+plural nouns and proper nouns) and pronouns.
+Adjectival comparatives
+ Does not deal with adverbial comparatives
+p
+
+
+3 steps
+ Sequence data generation
+ Label sequential rule (LSR) generation
+ Build a sequential cover/extractor from LSRs
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+69
+
+Sequence data generation
+
+
+
+Label Set = {$entityS1, $entityS2, $feature}
+Three labels are used as pivots to generate
+sequences.
+
+
+
+
+Radius of 4 for optimal results
+
+Following words are also added
+
+
+
+
+Bing Liu, UIC
+
+Distance
+Di
+t
+words
+d = {l1,
+{l1 l2,
+l2 l3,
+l3 l4,
+l4 r1,
+1 r2,
+2 r3,
+3 r4},
+4}
+where “li” means distance of i to the left of the
+p
+pivot.
+“ri” means the distance of i to the right of pivot.
+Special words #start and #end are used to mark
+the start and the end of a sentence.
+sentence
+WWW-2008 Tutorial
+
+70
+
+Sequence data generation example
+The comparative sentence
+“Canon/NNP has/VBZ better/JJR optics/NNS” has
+$entityS1 “Canon” and $feature “optics”.
+Sequences are:
+ 〈{#start}{l1}{$entityS1, NNP}{r1}{has, VBZ }{r2 }
+{better JJR}{r3}{$Feature,
+{better,
+JJR}{r3}{$Feature NNS}{r4}{#end}〉
+
+
+〈{#start}{l4}{$entityS1, NNP}{l3}{has, VBZ}{l2}
+{better, JJR}{l1}{$Feature, NNS}{r1}{#end}〉
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+71
+
+Build a sequential cover from LSRs
+LSR: 〈{
+〈{*, NN}{VBZ}〉 → 〈{$entityS1,
+〈{$entityS1 NN}{VBZ}〉
+Select the LSR rule with the highest confidence.
+Replace
+p
+the matched elements in the sentences
+that satisfy the rule with the labels in the rule.
+ Recalculate the confidence of each remaining rule
+based on the modified data from step 1.
+ Repeat step 1 and 2 until no rule left with
+confidence higher than the minconf value (we
+used 90%).
+
+
+(Details skipped)
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+72
+
+Experimental results (Jindal and Liu, AAAI-06)
+ Identifying Gradable Comparative Sentences
+
+
+precision = 82% and recall = 81%.
+
+ Classification into three gradable types
+
+
+SVM gave accuracy of 96%
+
+ Extraction of comparative relations
+
+
+LSR (label sequential rules): F-score = 72%
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+73
+
+Some other work
+ (Bos and Nissim 2006) proposes a method to
+
+extract items from superlative sentences. It
+y sentiments either.
+does not study
+ (Fiszman et al 2007) tried to identify which
+entity has more of a certain property in a
+comparative sentence.
+ (Ding and Liu 2008 submitted) studies
+sentiment analysis of comparatives, i.e.,
+y g which entity
+y is p
+preferred.
+identifying
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+74
+
+Roadmap
+ Opinion mining – the abstraction
+ Document level sentiment classification
+ Sentence level sentiment analysis
+ Feature-based opinion mining and
+
+summarization
+ Comparative sentence and relation
+extraction
+ Opinion spam
+ Summary
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+75
+
+Review Spam (Jindal and Liu 2008)
+Fake/untruthful review: p
+promote or damage
+g a
+product’s reputation
+ Different from finding usefulness of reviews
+
+
+Increasing mention in blogosphere
+ Articles in leading news media
+
+
+
+
+
+
+CNN, NY Times
+
+Increasing number of customers wary of fake
+reviews (biased reviews, paid reviews)
+by leading PR firm Burson-Marsteller
+Burson Marsteller
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+76
+
+Experiments with Amazon Reviews
+
+
+June 2006
+
+
+
+
+5.8mil reviews, 1.2mil products and 2.1mil reviewers.
+
+A review has 8 parts
+
+
+
+
+<Product ID> <Reviewer ID> <Rating> <Date> <Review Title>
+<Review Body> <Number of Helpful feedbacks> <Number of
+Feedbacks> <Number of Helpful Feedbacks>
+
+Industry manufactured products “mProducts
+mProducts”
+e.g. electronics, computers, accessories, etc
+
+
+228K reviews, 36K products and 165K reviewers.
+
+Bing Liu, UIC
+
+77
+
+WWW-2008 Tutorial
+
+Log-log plot
+Reviews, Reviewers
+and Products
+
+Fig. 1 reviews and reviewers
+
+Fig. 2 reviews and products
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+Fig. 3 reviews and feedbacks
+78
+
+Review Ratings
+
+•Rating of 5
+
+60% reviews
+45% of products
+59% of members
+Reviews and Feedbacks
+1st review – 80% positive feedbacks
+10th review – 70% positive feedbacks
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+79
+
+Duplicate Reviews
+Two reviews which have similar contents are
+called duplicates
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+80
+
+Categorization of Review Spam
+
+
+Type
+yp 1 ((Untruthful opinions,
+p
+fake reviews))
+Ex:
+
+
+
+Type 2 (Reviews on Brands Only) (?)
+Ex: “II don
+don’tt trust HP and never bought anything from them”
+them
+
+
+
+Type 3 (Non-reviews)
+
+
+Advertisements
+E “Detailed
+Ex:
+“D t il d product
+d t specs: 802
+802.11g,
+11 IMR compliant,
+li t …””
+“…buy this product at: compuplus.com”
+
+
+
+Other non-reviews
+E “What
+Ex:
+“Wh t portt is
+i it for”
+f ”
+“The other review is too funny”
+“Go Eagles go”
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+81
+
+Spam Detection
+ Type 2 and Type 3 spam reviews
+
+
+Supervised learning
+
+ Type 1 spam reviews
+
+Manual labeling extremely hard
+ Propose to use duplicate and near-duplicate
+reviews to help
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+82
+
+Detecting Type 2 & Type 3 Spam
+Reviews
+ Binary classification
+
+
+Logistic Regression
+
+
+
+Probability estimates
+Practical applications,
+pp
+like g
+give weights
+g
+to each review,
+rank them, etc
+
+ Poor
+P
+performance
+f
+on other
+th models
+d l
+
+
+Bing Liu, UIC
+
+naïve Bayes, SVM and Decision Trees
+
+WWW-2008 Tutorial
+
+83
+
+Three types of features
+Only review content features are not sufficient
+sufficient.
+We use:
+ Review centric features (content)
+
+
+Features about reviews
+
+ Reviewer
+R i
+centric
+t i ffeatures
+t
+
+
+Features about the reviewers
+
+ Product
+P d t centric
+t i features
+f t
+
+
+Features about products reviewed.
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+84
+
+Review centric features
+Number of feedbacks ((F1),
+), number (F2)
+( ) and
+percent (F3) of helpful feedbacks
+ Length of the review title (F4) and length of review
+body (F5).
+ …
+ Textual features
+
+
+Percent of positive (F10) and negative (F11)
+opinion-bearing words in the review
+ Cosine similarity (F12) of review and product
+f t
+features
+ …
+Bing Liu, UIC
+WWW-2008 Tutorial
+
+
+85
+
+Reviewer centric features
+ Ratio of the number of reviews that the
+
+reviewer wrote which were the first reviews
+((F22)) of the products
+p
+to the total number of
+reviews that he/she wrote, and
+ ratio of the number of cases in which he/she
+was the only reviewer (F23).
+ average rating given by reviewer (F24)
+(F24),
+standard deviation in rating (F25)
+ ……
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+86
+
+Product centric features
+ Price (F33) of the product
+product.
+ Sales rank (F34) of the product
+ Average rating (F35) of the product
+ standard deviation in ratings (F36) of the
+
+reviews
+i
+on th
+the product.
+d t
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+87
+
+Experimental Results
+Evaluation criteria
+
+•
+
+Area Under Curve (AUC)
+– 10-fold cross validation
+–
+
+•
+•
+•
+•
+
+High AUC -> Easy to detect
+Equally well on type 2 and type 3 spam
+text features alone not sufficient
+Feedbacks unhelpful (feedback spam)
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+88
+
+Deal with Type 1 (untruthful reviews)
+ We have a problem: because
+
+It is extremely hard to label fake/untruthful reviews
+manually.
+y
+ Without training data, we cannot do supervised
+learning.
+
+
+ Possible solution:
+
+
+Can we make use certain duplicate reviews as
+fake reviews (which are almost certainly
+untruthful)?
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+89
+
+Recall: four types of duplicates
+1
+1.
+2.
+3
+3.
+4.
+
+Same userid,
+userid same product
+Different userid, same product
+Same userid,
+userid different products
+Different userid, different products
+
+ The last three types are very likely to be fake!
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+90
+
+Predictive Power of Duplicates
+
+
+
+
+Representative of all kinds of spam
+Onlyy 3% duplicates
+p
+accidental
+Duplicates as positive examples, rest of the reviews as negative
+examples
+
+–
+–
+
+reasonable predictive power
+Maybe we can use duplicates as type 1 spam reviews(?)
+
+Bing Liu, UIC
+
+91
+
+WWW-2008 Tutorial
+
+Type 1 Spam Reviews
+ Hype spam – promote one’s own products
+ Defaming spam – defame one’s competitors’ products
+
+
+
+Very hard to detect manually
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+Harmful Regions
+
+92
+
+Harmful Spam are Outlier Reviews?
+Outliers reviews: Reviews which deviate from
+average product rating
+ Harmful spam reviews: Outliers - necessary, but
+not sufficient, condition for harmful spam reviews.
+
+
+
+
+M d lb
+Model
+building:
+ildi
+llogistic
+i i regression
+i
+Training: duplicates as type 1 reviews (positive) and the
+rest as non-spam reviews (negative)
+ Predicting outlier reviews
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+93
+
+Lift Curve for Outlier Reviews
+Biased reviewers -> all
+good or bad reviews on
+products of a brand
+
+
+-ve deviation reviews
+p
+more likelyy to be spam
+
+
+
+
+Biased reviews most
+likely
+
++ve deviation reviews
+least likely to be spam
+except,
+
+
+
+average reviews on bad
+products
+Biased reviewers
+re ie ers
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+94
+
+Some other interesting reviews
+
+
+The model is able to predict outlier reviews to
+some extend (we are NOT saying outliers are
+spam)
+
+ Let us use the model to analysis some other
+
+g Reviews
+interesting
+Only reviews
+ Reviews from top ranked members
+ Reviews with different feedbacks
+ Reviews on products with different sales ranks
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+95
+
+Only Reviews
+
+46% of reviewed products have only one review
+ Only reviews have high lift curve
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+96
+
+Reviews from Top-Ranked Reviewers
+
+
+
+Reviews by top ranked reviewers given higher
+probabilities of spam
+Top ranked members write larger number of reviews
+ Deviate a lot from product rating
+rating, write a lot of only reviews
+
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+97
+
+Reviews with different levels of feedbacks
+
+ Random distribution
+
+
+Spam reviews can get good feedbacks
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+98
+
+Reviews of products with varied sales ranks
+
+
+
+Product sales rank
+
+
+
+
+
+Important feature
+
+High sales rank – low levels of spam
+Spam
+p
+activities linked to low selling
+gp
+products
+
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+99
+
+Roadmap
+ Opinion mining – the abstraction
+ Document level sentiment classification
+ Sentence level sentiment analysis
+ Feature-based opinion mining and
+
+summarization
+ Comparative sentence and relation
+extraction
+ Opinion spam
+ Summary
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+100
+
+Summary
+Two types of opinions have been discussed
+
+Direct opinions
+ Document level, sentence level and feature level
+ Structured summary of multiple reviews
+
+Comparisons
+ Identification of comparative sentences
+ Extraction of comparative relations
+
+Very challenging problems,
+problems but there are already
+some applications of opinion mining.
+
+Detecting opinion spam or fake reviews is very hard.
+Bing Liu, UIC
+
+WWW-2008 Tutorial
+
+101
+
+

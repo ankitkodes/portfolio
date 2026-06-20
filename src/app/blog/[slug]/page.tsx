@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { flushSync } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
+import { useTheme } from "@/component/ThemeProvider";
 
 /* ─────────────────────────────────────────────
    SVG Icons (matching v2 main page)
@@ -149,8 +150,7 @@ export default function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const [slug, setSlug] = useState<string | null>(null);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [isThemeInitialized, setIsThemeInitialized] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const rootRef = useRef<HTMLDivElement>(null);
   const progress = useReadingProgress();
 
@@ -158,50 +158,6 @@ export default function BlogPostPage({
   useEffect(() => {
     params.then((p) => setSlug(p.slug));
   }, [params]);
-
-  // Initialize theme from localStorage / system
-  useEffect(() => {
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const saved = localStorage.getItem("v2-theme");
-    const initial = saved ? (saved as "light" | "dark") : prefersDark ? "dark" : "light";
-    setTheme(initial);
-    setIsThemeInitialized(true);
-  }, []);
-
-  // Apply theme attribute
-  useEffect(() => {
-    if (!isThemeInitialized) return;
-    const root = rootRef.current?.closest(".v2-root");
-    if (root) {
-      (root as HTMLElement).setAttribute("data-theme", theme);
-    }
-    localStorage.setItem("v2-theme", theme);
-  }, [theme, isThemeInitialized]);
-
-  const toggleTheme = (e: React.MouseEvent) => {
-    const nextTheme = theme === "light" ? "dark" : "light";
-    if (!document.startViewTransition) {
-      setTheme(nextTheme);
-      return;
-    }
-    const x = e.clientX;
-    const y = e.clientY;
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
-    const transition = document.startViewTransition(() => {
-      flushSync(() => setTheme(nextTheme));
-      const root = rootRef.current?.closest(".v2-root") as HTMLElement;
-      if (root) root.setAttribute("data-theme", nextTheme);
-    });
-    transition.ready.then(() => {
-      document.documentElement.animate(
-        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`] },
-        { duration: 500, easing: "ease-in-out", pseudoElement: "::view-transition-new(root)" }
-      );
-    });
-  };
 
   // Callback ref to inject copy buttons when the article mounts
   const articleRefCallback = useCallback((article: HTMLElement | null) => {

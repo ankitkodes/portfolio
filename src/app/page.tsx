@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { flushSync } from "react-dom";
 import Image from "next/image";
-
+import Link from "next/link";
+import { useTheme } from "@/component/ThemeProvider";
 /* ─────────────────────────────────────────────
    SVG Icon Components (no external deps)
    ───────────────────────────────────────────── */
@@ -90,10 +91,10 @@ const experiences = [
     role: "Full Stack Developer",
     date: "Oct 2025 – Mar 2026",
     description: [
-      "Implemented end-to-end Razorpay payment gateway integration including webhook handling, order verification, and payment failure reconciliation, enabling live transactions in production.",
-      "Built an OCR-based document verification frontend from scratch with fully responsive design, allowing users to review and correct extracted data in real-time with zero backend dependency on initial load.",
-      "Improved web performance by refactoring core React components with lazy loading, memoization, and list virtualization — measurably reducing page load time across multiple high-traffic modules.",
-      "Collaborated with 6–7 engineers to define RESTful API contracts, deliver production features on schedule, and maintain quality through Agile sprints and CI/CD pipelines via Vercel.",
+      "Engineered a Razorpay payment gateway integration with webhook-based order verification and failure reconciliation, ensuring zero data loss on transactions.",
+      "Built the frontend for an OCR-based document verification flow, integrating backend APIs for real-time data review and correction.",
+      "Revamped core UI components, reducing First Contentful Paint (FCP) by 1.5 seconds through lazy loading and memoization.",
+      "Optimized Quiz Module rendering by 40% using list virtualization, directly improving user retention metrics.",
     ],
   },
 ];
@@ -168,30 +169,10 @@ const currently = [
    ───────────────────────────────────────────── */
 export default function V2Page() {
   const [activeTab, setActiveTab] = useState<TabName>("Home");
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [isThemeInitialized, setIsThemeInitialized] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const tabsRef = useRef<HTMLDivElement>(null);
   const indicatorRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-
-  // Initialize theme from system preference
-  useEffect(() => {
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const saved = localStorage.getItem("v2-theme");
-    const initial = saved ? (saved as "light" | "dark") : prefersDark ? "dark" : "light";
-    setTheme(initial);
-    setIsThemeInitialized(true);
-  }, []);
-
-  // Apply theme to root
-  useEffect(() => {
-    if (!isThemeInitialized) return;
-    const root = rootRef.current?.closest(".v2-root");
-    if (root) {
-      (root as HTMLElement).setAttribute("data-theme", theme);
-    }
-    localStorage.setItem("v2-theme", theme);
-  }, [theme, isThemeInitialized]);
 
   // Update indicator position
   const updateIndicator = useCallback(() => {
@@ -210,48 +191,6 @@ export default function V2Page() {
     window.addEventListener("resize", updateIndicator);
     return () => window.removeEventListener("resize", updateIndicator);
   }, [activeTab, updateIndicator]);
-
-  const toggleTheme = (e: React.MouseEvent) => {
-    const nextTheme = theme === "light" ? "dark" : "light";
-
-    if (!document.startViewTransition) {
-      setTheme(nextTheme);
-      return;
-    }
-
-    const x = e.clientX;
-    const y = e.clientY;
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
-
-    const transition = document.startViewTransition(() => {
-      flushSync(() => {
-        setTheme(nextTheme);
-      });
-      const root = rootRef.current?.closest(".v2-root") as HTMLElement;
-      if (root) {
-        root.setAttribute("data-theme", nextTheme);
-      }
-    });
-
-    transition.ready.then(() => {
-      document.documentElement.animate(
-        {
-          clipPath: [
-            `circle(0px at ${x}px ${y}px)`,
-            `circle(${endRadius}px at ${x}px ${y}px)`
-          ]
-        },
-        {
-          duration: 500,
-          easing: "ease-in-out",
-          pseudoElement: "::view-transition-new(root)"
-        }
-      );
-    });
-  };
 
   const switchTab = (tab: TabName) => {
     setActiveTab(tab);
@@ -372,8 +311,8 @@ export default function V2Page() {
 
         {/* ── PINNED CARDS ── */}
         <div className="v2-pinned-row" id="v2-pinned">
-          <a
-            href="#"
+          <Link
+            href="/blog/nodejs-memory-leaks"
             className="v2-pinned-card"
             id="v2-pinned-blog"
           >
@@ -385,7 +324,7 @@ export default function V2Page() {
             <span className="v2-pinned-link">
               Read Post <IconChevronRight />
             </span>
-          </a>
+          </Link>
           <a
             href="https://github.com/ankitkodes/Aurum"
             target="_blank"
@@ -549,7 +488,7 @@ export default function V2Page() {
           <div className="v2-panel" id="v2-panel-blog">
             <div className="v2-blog-list">
               {blogPosts.map((post) => (
-                <a
+                <Link
                   key={post.title}
                   href={post.link}
                   className="v2-blog-item"
@@ -564,7 +503,7 @@ export default function V2Page() {
                     <span>{post.readTime}</span>
                   </div>
                   <div className="v2-blog-excerpt">{post.excerpt}</div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
