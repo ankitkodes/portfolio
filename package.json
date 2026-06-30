@@ -41,8 +41,8 @@
     "next": "^16.2.6",
     "next-auth": "^4.24.11",
     "prisma": "^5.22.0",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-hot-toast": "^2.6.0",
     "slugify": "^1.6.9"
   },
