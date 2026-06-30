@@ -1,26 +1,36 @@
 import { MetadataRoute } from 'next';
+import prisma from '@/lib/db';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  // If you know your domain, change it here:
-  const baseUrl = 'https://ankitkumar.site'; // Ensure this matches your actual domain later
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = 'https://ankitkumar.site';
+
+  // Fetch all published blog posts for dynamic sitemap entries
+  const posts = await prisma.blogPost.findMany({
+    where: { status: 'published' },
+    select: { slug: true, updatedAt: true, publishedAt: true },
+    orderBy: { publishedAt: 'desc' },
+  });
+
+  const blogPostUrls: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: post.updatedAt || post.publishedAt || new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
 
   return [
     {
-      url: `${baseUrl}`,
+      url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
+      changeFrequency: 'monthly',
       priority: 1,
     },
-    // Add other static routes here
-    // Example:
-    // {
-    //   url: `${baseUrl}/blog`,
-    //   lastModified: new Date(),
-    //   changeFrequency: 'weekly',
-    //   priority: 0.8,
-    // },
-
-    // You can also dynamically generate URLs here by fetching your blog posts
-    // and mapping them to the format: { url: `${baseUrl}/blog/slug-name`, lastModified: ... }
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    ...blogPostUrls,
   ];
 }

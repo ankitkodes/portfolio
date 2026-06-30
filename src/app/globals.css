@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@variant dark ([data-theme="dark"] &);
+
 /* ============================================
    V2 PORTFOLIO — Twitter-Profile Layout
    Apple-level clean design system
@@ -279,6 +282,7 @@ body:has(.v2-root)::after {
    CONTENT COLUMN
    ============================================ */
 .v2-content {
+  width: 100%;
   max-width: 760px;
   margin: 0 auto;
   padding: 0 16px;
@@ -916,9 +920,11 @@ body:has(.v2-root)::after {
 .v2-blog-list {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .v2-blog-item {
+  width: 100%;
   padding: 16px;
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -1025,7 +1031,7 @@ body:has(.v2-root)::after {
 
 /* Blog main container */
 .v2-blog-main {
-  max-width: 680px;
+  max-width: 1060px;
   width: 100%;
   margin: 0 auto;
   padding: 0 16px;

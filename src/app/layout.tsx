@@ -17,6 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ankitkumar.site"),
   title: "Ankit Kumar | Software Engineer & Full Stack Developer",
   description: "Portfolio of Ankit Kumar, a passionate Software Engineer, Full Stack Developer, Frontend Developer, and Backend Developer. View my projects, skills, and experience.",
   keywords: [

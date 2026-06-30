@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/private/', '/api/'], // Disallow indexing of private or API routes
     },
-    sitemap: 'https://ankitkumar.dev/sitemap.xml', // Ensure this matches your actual domain
+    sitemap: 'https://ankitkumar.site/sitemap.xml',
   };
 }
