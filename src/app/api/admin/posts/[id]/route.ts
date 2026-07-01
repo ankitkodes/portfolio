@@ -37,6 +37,10 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         publishedAt: body.status === "published" ? new Date() : null,
       },
     });
+
+    const { logActivity } = await import("@/lib/activity");
+    await logActivity(body.status === "published" ? "publish" : "update", "post", post.title);
+
     return NextResponse.json(post);
   } catch (e) { return NextResponse.json({ error: String(e) }, { status: 500 }); }
 }
@@ -45,7 +49,12 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
   if (!(await verifySession())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await params;
   try {
-    await prisma.blogPost.delete({ where: { id } });
+    const post = await prisma.blogPost.findUnique({ where: { id } });
+    if (post) {
+      await prisma.blogPost.delete({ where: { id } });
+      const { logActivity } = await import("@/lib/activity");
+      await logActivity("delete", "post", post.title);
+    }
     return NextResponse.json({ success: true });
   } catch { return NextResponse.json({ error: "Failed" }, { status: 500 }); }
 }

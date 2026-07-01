@@ -70,7 +70,7 @@ model Skill {
 }
 
 model Profile {
-  id           String   @id @default(cuid())
+  id           String    @id @default(cuid())
   name         String
   tagline      String?
   bio          String?
@@ -80,6 +80,15 @@ model Profile {
   github       String?
   linkedin     String?
   twitter      String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  lastLogin    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model ActivityLog {
+  id          String   @id @default(cuid())
+  action      String   // create, update, publish, delete
+  entityType  String   // post, project, skill, experience, profile
+  entityTitle String
+  createdAt   DateTime @default(now())
 }

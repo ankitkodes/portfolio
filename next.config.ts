@@ -33,3 +33,5 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+// Trigger server reload to pick up generated Prisma client changes

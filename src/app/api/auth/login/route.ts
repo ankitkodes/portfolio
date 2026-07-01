@@ -17,6 +17,20 @@ export async function POST(req: Request) {
   // Import dynamically to avoid edge issues
   const { getSessionCookie } = await import("@/lib/auth");
   const cookie = getSessionCookie();
+
+  // Update lastLogin timestamp on profile
+  try {
+    const prisma = (await import("@/lib/db")).default;
+    const profile = await prisma.profile.findFirst();
+    if (profile) {
+      await prisma.profile.update({
+        where: { id: profile.id },
+        data: { lastLogin: new Date() },
+      });
+    }
+  } catch (err) {
+    console.error("Failed to update lastLogin:", err);
+  }
   
   const response = NextResponse.json({ success: true });
   response.cookies.set(cookie.name, cookie.value, {

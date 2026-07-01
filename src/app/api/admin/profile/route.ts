@@ -51,6 +51,9 @@ export async function POST(req: Request) {
       });
     }
     
+    const { logActivity } = await import("@/lib/activity");
+    await logActivity(existing ? "update" : "create", "profile", profile.name);
+
     return NextResponse.json(profile);
   } catch (error) {
     return NextResponse.json({ error: "Failed to save profile" }, { status: 500 });

@@ -16,6 +16,10 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         icon: data.icon,
       }
     });
+
+    const { logActivity } = await import("@/lib/activity");
+    await logActivity("update", "skill", skill.name);
+
     return NextResponse.json(skill);
   } catch (error) {
     return NextResponse.json({ error: "Failed to update skill" }, { status: 500 });
@@ -26,9 +30,14 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
   if (!(await verifySession())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await params;
   try {
-    await prisma.skill.delete({
-      where: { id }
-    });
+    const skill = await prisma.skill.findUnique({ where: { id } });
+    if (skill) {
+      await prisma.skill.delete({
+        where: { id }
+      });
+      const { logActivity } = await import("@/lib/activity");
+      await logActivity("delete", "skill", skill.name);
+    }
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ error: "Failed to delete skill" }, { status: 500 });

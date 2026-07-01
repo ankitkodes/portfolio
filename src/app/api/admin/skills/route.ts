@@ -27,6 +27,10 @@ export async function POST(req: Request) {
         order: data.order || 0,
       }
     });
+
+    const { logActivity } = await import("@/lib/activity");
+    await logActivity("create", "skill", skill.name);
+
     return NextResponse.json(skill);
   } catch (error) {
     return NextResponse.json({ error: "Failed to create skill" }, { status: 500 });

@@ -39,6 +39,10 @@ export async function POST(req: Request) {
         order: data.order || 0,
       }
     });
+
+    const { logActivity } = await import("@/lib/activity");
+    await logActivity("create", "project", project.title);
+
     return NextResponse.json(project);
   } catch (error: any) {
     if (error?.code === 'P2002') return NextResponse.json({ error: "Slug must be unique" }, { status: 400 });

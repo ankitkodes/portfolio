@@ -31,6 +31,10 @@ export async function POST(req: Request) {
         order: data.order || 0,
       }
     });
+
+    const { logActivity } = await import("@/lib/activity");
+    await logActivity("create", "experience", `${exp.role} at ${exp.company}`);
+
     return NextResponse.json(exp);
   } catch (error) {
     return NextResponse.json({ error: "Failed to create experience" }, { status: 500 });

@@ -30,6 +30,10 @@ export async function POST(req: Request) {
         publishedAt: body.status === "published" ? new Date() : null, readTime: `${readTime} min read`,
       },
     });
+
+    const { logActivity } = await import("@/lib/activity");
+    await logActivity(post.status === "published" ? "publish" : "create", "post", post.title);
+
     return NextResponse.json(post);
   } catch (e) {
     return NextResponse.json({ error: String(e) }, { status: 500 });
