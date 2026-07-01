@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import prisma from "@/lib/db";
+import type { BlogPost } from "@prisma/client";
 import { notFound } from "next/navigation";
 import BlogPostClient from "./BlogPostClient";
 
@@ -14,17 +15,24 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
 
-  const post = await prisma.blogPost.findUnique({
-    where: { slug },
-    select: {
-      title: true,
-      excerpt: true,
-      tags: true,
-      coverImage: true,
-      publishedAt: true,
-      slug: true,
-    },
-  });
+  let post: any = null;
+  try {
+    if (process.env.DATABASE_URL) {
+      post = await prisma.blogPost.findUnique({
+        where: { slug },
+        select: {
+          title: true,
+          excerpt: true,
+          tags: true,
+          coverImage: true,
+          publishedAt: true,
+          slug: true,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Failed to load post metadata during build:", error);
+  }
 
   if (!post || !post.title) {
     return {
@@ -93,9 +101,16 @@ export default async function BlogPostPage({
 }) {
   const { slug } = await params;
 
-  const post = await prisma.blogPost.findUnique({
-    where: { slug },
-  });
+  let post: BlogPost | null = null;
+  try {
+    if (process.env.DATABASE_URL) {
+      post = await prisma.blogPost.findUnique({
+        where: { slug },
+      });
+    }
+  } catch (error) {
+    console.error("Failed to load blog post during build:", error);
+  }
 
   if (!post || post.status !== "published") {
     return notFound();

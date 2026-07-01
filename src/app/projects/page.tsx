@@ -1,17 +1,25 @@
 import prisma from "@/lib/db";
+import type { Project } from "@prisma/client";
 import Link from "next/link";
 import { ExternalLink, Github } from "lucide-react";
 
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
-  const projects = await prisma.project.findMany({
-    where: { status: "active" },
-    orderBy: [
-      { featured: "desc" },
-      { order: "asc" }
-    ]
-  });
+  let projects: Project[] = [];
+  try {
+    if (process.env.DATABASE_URL) {
+      projects = await prisma.project.findMany({
+        where: { status: "active" },
+        orderBy: [
+          { featured: "desc" },
+          { order: "asc" }
+        ]
+      });
+    }
+  } catch (error) {
+    console.error("Failed to load projects from database during build:", error);
+  }
 
   return (
     <div className="v2-container" style={{ padding: "80px 24px", maxWidth: 1200, margin: "0 auto" }}>

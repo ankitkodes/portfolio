@@ -1,15 +1,26 @@
 import prisma from "@/lib/db";
+import type { Profile, Experience, Skill } from "@prisma/client";
 
 export const revalidate = 60;
 
 const CATEGORIES = ['Frontend', 'Backend', 'Database', 'Deployment', 'Tools', 'Design', 'Other'];
 
 export default async function AboutPage() {
-  const [profile, experiences, skills] = await Promise.all([
-    prisma.profile.findFirst(),
-    prisma.experience.findMany({ orderBy: { order: "asc" } }),
-    prisma.skill.findMany({ orderBy: { order: "asc" } })
-  ]);
+  let profile: Profile | null = null;
+  let experiences: Experience[] = [];
+  let skills: Skill[] = [];
+
+  try {
+    if (process.env.DATABASE_URL) {
+      [profile, experiences, skills] = await Promise.all([
+        prisma.profile.findFirst(),
+        prisma.experience.findMany({ orderBy: { order: "asc" } }),
+        prisma.skill.findMany({ orderBy: { order: "asc" } })
+      ]);
+    }
+  } catch (error) {
+    console.error("Failed to load profile, experiences, or skills from database during build:", error);
+  }
 
   const skillsByCategory = CATEGORIES.reduce((acc, cat) => {
     acc[cat] = skills.filter(s => s.category === cat);

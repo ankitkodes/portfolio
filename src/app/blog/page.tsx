@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import prisma from "@/lib/db";
+import type { BlogPost } from "@prisma/client";
 import { ThemeToggle } from "./ThemeToggle";
 
 /* ─── SEO METADATA ─── */
@@ -45,13 +46,20 @@ const IconChevronRight = () => (
 );
 
 export default async function BlogListPage() {
-  const posts = await prisma.blogPost.findMany({
-    where: { status: "published" },
-    orderBy: [
-      { featured: "desc" },
-      { publishedAt: "desc" }
-    ],
-  });
+  let posts: BlogPost[] = [];
+  try {
+    if (process.env.DATABASE_URL) {
+      posts = await prisma.blogPost.findMany({
+        where: { status: "published" },
+        orderBy: [
+          { featured: "desc" },
+          { publishedAt: "desc" }
+        ],
+      });
+    }
+  } catch (error) {
+    console.error("Failed to load blog posts from database during build:", error);
+  }
 
   /* ─── JSON-LD Structured Data for Blog listing ─── */
   const jsonLd = {

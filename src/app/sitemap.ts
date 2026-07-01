@@ -4,12 +4,18 @@ import prisma from '@/lib/db';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://ankitkumar.site';
 
-  // Fetch all published blog posts for dynamic sitemap entries
-  const posts = await prisma.blogPost.findMany({
-    where: { status: 'published' },
-    select: { slug: true, updatedAt: true, publishedAt: true },
-    orderBy: { publishedAt: 'desc' },
-  });
+  let posts: any[] = [];
+  try {
+    if (process.env.DATABASE_URL) {
+      posts = await prisma.blogPost.findMany({
+        where: { status: 'published' },
+        select: { slug: true, updatedAt: true, publishedAt: true },
+        orderBy: { publishedAt: 'desc' },
+      });
+    }
+  } catch (error) {
+    console.error("Failed to load blog posts for sitemap during build:", error);
+  }
 
   const blogPostUrls: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
