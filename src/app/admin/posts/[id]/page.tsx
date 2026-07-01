@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { useTheme } from "@/component/ThemeProvider";
 import dynamic from "next/dynamic";
-import { ArrowLeft, Save, Upload } from "lucide-react";
+import { ArrowLeft, Save, Upload, Eye } from "lucide-react";
 import toast from "react-hot-toast";
 
 const Editor = dynamic(() => import("@/components/admin/BlockNoteEditor"), { ssr: false });
@@ -24,7 +24,7 @@ export default function PostEditorPage() {
   const router = useRouter();
   const params = useParams();
   const isNew = params.id === "new";
-  
+
   const [title, setTitle] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [tags, setTags] = useState<string[]>([]);
@@ -32,15 +32,16 @@ export default function PostEditorPage() {
   const [status, setStatus] = useState("draft");
   const [coverImage, setCoverImage] = useState("");
   const [featured, setFeatured] = useState(false);
-  
+  const [slug, setSlug] = useState("");
+
   const [saving, setSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState("");
   const [loaded, setLoaded] = useState(isNew);
   const [wordCount, setWordCount] = useState(0);
   const { theme } = useTheme();
-  
+
   const [content, setContent] = useState<any[]>([]);
-  
+
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const savePost = useCallback(async (auto = false) => {
@@ -59,12 +60,13 @@ export default function PostEditorPage() {
       if (!res.ok) throw new Error(data.error || "Failed to save");
       setSaveStatus("Saved");
       if (!auto) toast.success("Post saved");
+      if (data.slug) setSlug(data.slug);
       if (isNew && data.id) router.replace(`/admin/posts/${data.id}`);
     } catch (err) {
       setSaveStatus("Error");
       if (!auto) toast.error(err instanceof Error ? err.message : "Save failed");
     } finally { setSaving(false); }
-  }, [title, excerpt, tags, status, coverImage, featured, content, isNew, params.id, router]);
+  }, [title, excerpt, tags, status, coverImage, featured, content, isNew, params.id, router, setSlug]);
 
   const scheduleAutoSave = useCallback(() => {
     if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current);
@@ -83,19 +85,20 @@ export default function PostEditorPage() {
         setStatus(data.status || "draft");
         setCoverImage(data.coverImage || "");
         setFeatured(data.featured || false);
-        
+        setSlug(data.slug || "");
+
         if (data.content && Array.isArray(data.content)) {
           setContent(data.content);
         }
         setLoaded(true);
       })
       .catch(() => toast.error("Failed to load post"));
-  }, [isNew, params.id, loaded]);
+  }, [isNew, params.id, loaded, setSlug]);
 
   const handleEditorChange = (blocks: any[]) => {
     setContent(blocks);
     scheduleAutoSave();
-    
+
     // Calculate word count
     let text = "";
     blocks.forEach((block: any) => {
@@ -120,7 +123,7 @@ export default function PostEditorPage() {
   if (!loaded) return <div className="admin-loading">Loading editor...</div>;
 
   return (
-    <div>
+    <div className="admin-editor-page-wrapper">
       <div className="admin-page-header">
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <Link href="/admin/posts" className="admin-icon-btn"><ArrowLeft size={16} /></Link>
@@ -129,45 +132,60 @@ export default function PostEditorPage() {
         </div>
         <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
           <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 14, cursor: "pointer", userSelect: "none", color: "var(--admin-text-secondary)" }}>
-            <input 
-              type="checkbox" 
-              checked={featured} 
-              onChange={(e) => { setFeatured(e.target.checked); scheduleAutoSave(); }} 
+            <input
+              type="checkbox"
+              checked={featured}
+              onChange={(e) => { setFeatured(e.target.checked); scheduleAutoSave(); }}
               style={{ cursor: "pointer" }}
             />
             ⭐ Pin to Home
           </label>
-          <select value={status} onChange={(e) => { setStatus(e.target.value); scheduleAutoSave(); }} style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid var(--admin-border)", fontSize: 14, fontFamily: "inherit" }}>
+          <select
+            value={status}
+            onChange={(e) => { setStatus(e.target.value); scheduleAutoSave(); }}
+            className="admin-editor-status-select"
+          >
             <option value="draft">Draft</option>
             <option value="published">Published</option>
           </select>
+          {slug && (
+            <a
+              href={`/blog/${slug}?preview=true`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="admin-btn admin-btn-secondary"
+              style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
+            >
+              <Eye size={16} /> Preview
+            </a>
+          )}
           <button className="admin-btn admin-btn-primary" onClick={() => savePost(false)} disabled={saving}>
             <Save size={16} /> {saving ? "Saving..." : "Save"}
           </button>
         </div>
       </div>
 
-      <div className="admin-card" style={{ padding: "32px 48px" }}>
+      <div className="admin-editor-card">
         {coverImage && (
-          <div style={{ width: "100%", height: 240, overflow: "hidden", borderRadius: 12, marginBottom: 24 }}>
-            <img src={coverImage} alt="Cover" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <div className="admin-editor-cover-preview">
+            <img src={coverImage} alt="Cover" />
           </div>
         )}
-        
-        <div className="admin-field" style={{ marginBottom: 24 }}>
+
+        <div className="admin-editor-cover-input-group">
           <div style={{ display: "flex", gap: 12 }}>
-            <input 
-              value={coverImage} 
-              onChange={(e) => { setCoverImage(e.target.value); scheduleAutoSave(); }} 
-              placeholder="Add cover image URL..." 
-              style={{ border: "none", backgroundColor: "var(--admin-bg)", padding: "10px 16px", borderRadius: 8, flex: 1 }}
+            <input
+              value={coverImage}
+              onChange={(e) => { setCoverImage(e.target.value); scheduleAutoSave(); }}
+              placeholder="Add cover image URL..."
+              className="admin-editor-cover-url"
             />
-            <label className="admin-btn admin-btn-secondary" style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Upload size={16} /> Upload
-              <input 
-                type="file" 
-                accept="image/*" 
-                style={{ display: "none" }} 
+            <label className="admin-btn admin-btn-secondary admin-editor-upload-btn">
+              <Upload size={16} style={{ marginRight: 6 }} /> Upload
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
                 onChange={async (e) => {
                   if (e.target.files && e.target.files[0]) {
                     try {
@@ -178,56 +196,59 @@ export default function PostEditorPage() {
                       toast.error("Failed to upload image");
                     }
                   }
-                }} 
+                }}
               />
             </label>
           </div>
         </div>
 
-        <input 
-          className="admin-editor-title" 
-          value={title} 
-          onChange={(e) => { setTitle(e.target.value); scheduleAutoSave(); }} 
-          placeholder="Post title..." 
-          style={{ fontSize: 36, fontWeight: 600, border: "none", width: "100%", outline: "none", marginBottom: 12 }}
-        />
-        
-        <textarea 
-          className="admin-editor-excerpt" 
-          value={excerpt} 
-          onChange={(e) => { setExcerpt(e.target.value); scheduleAutoSave(); }} 
-          placeholder="Write a brief excerpt..." 
-          rows={2} 
-          style={{ fontSize: 18, color: "var(--admin-text-secondary)", border: "none", width: "100%", outline: "none", resize: "none" }}
+        <input
+          className="admin-editor-title"
+          value={title}
+          onChange={(e) => { setTitle(e.target.value); scheduleAutoSave(); }}
+          placeholder="Post title..."
         />
 
-        <div className="admin-editor-divider" style={{ height: 1, backgroundColor: "var(--admin-border)", margin: "24px 0" }} />
-        
-        <div className="admin-editor-body" style={{ minHeight: 400 }}>
+        <textarea
+          className="admin-editor-excerpt"
+          value={excerpt}
+          onChange={(e) => { setExcerpt(e.target.value); scheduleAutoSave(); }}
+          placeholder="Write a brief excerpt..."
+          rows={2}
+        />
+
+        <div className="admin-editor-divider" />
+
+        <div className="admin-editor-body">
           <Editor initialContent={content} onChange={handleEditorChange} theme={theme === "dark" ? "dark" : "light"} />
         </div>
 
-        <div className="admin-editor-footer" style={{ marginTop: 40, paddingTop: 20, borderTop: "1px solid var(--admin-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div style={{ display: "flex", gap: 16, color: "var(--admin-text-secondary)", fontSize: 14 }}>
+        <div className="admin-editor-footer">
+          <div className="admin-editor-stats">
             <span>{wordCount} words</span>
             <span>{readTime} min read</span>
           </div>
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <input 
-              value={tagInput} 
-              onChange={(e) => setTagInput(e.target.value)} 
-              onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())} 
-              placeholder="Add tag..." 
-              style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid var(--admin-border)", fontSize: 13, width: 140 }} 
+          <div className="admin-editor-tags-add">
+            <input
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
+              placeholder="Add tag..."
+              className="admin-editor-tag-input"
             />
           </div>
         </div>
         {tags.length > 0 && (
-          <div className="admin-tags" style={{ marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <div className="admin-editor-tags-list">
             {tags.map((t) => (
-              <span key={t} className="admin-tag" style={{ background: "var(--admin-bg)", padding: "4px 10px", borderRadius: 100, fontSize: 13, display: "flex", alignItems: "center", gap: 6 }}>
-                {t} 
-                <button onClick={() => { setTags(tags.filter((x) => x !== t)); scheduleAutoSave(); }} style={{ border: "none", background: "none", cursor: "pointer", color: "var(--admin-text-secondary)" }}>×</button>
+              <span key={t} className="admin-editor-tag-chip">
+                {t}
+                <button
+                  onClick={() => { setTags(tags.filter((x) => x !== t)); scheduleAutoSave(); }}
+                  className="admin-editor-tag-remove"
+                >
+                  ×
+                </button>
               </span>
             ))}
           </div>

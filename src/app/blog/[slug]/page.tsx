@@ -96,10 +96,14 @@ function extractPlainText(content: any[]): string {
 
 export default async function BlogPostPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { slug } = await params;
+  const sParams = await searchParams;
+  const isPreview = sParams?.preview === "true";
 
   let post: BlogPost | null = null;
   try {
@@ -112,7 +116,7 @@ export default async function BlogPostPage({
     console.error("Failed to load blog post during build:", error);
   }
 
-  if (!post || post.status !== "published") {
+  if (!post || (post.status !== "published" && !isPreview)) {
     return notFound();
   }
 

@@ -95,9 +95,9 @@ export default function BlogPostClient({
         </div>
       </nav>
 
-      <main className="v2-blog-main" style={{ display: "flex", gap: 40, alignItems: "flex-start", position: "relative" }}>
+      <main className="v2-blog-main" style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
         {/* Main Content Column */}
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ width: "100%", minWidth: 0 }}>
           <header className="v2-blog-header">
             {post.tags && post.tags.length > 0 && (
               <div className="v2-blog-tags">
@@ -131,6 +131,70 @@ export default function BlogPostClient({
             </div>
           )}
 
+          {/* Integrated Table of Contents */}
+          {toc && toc.length > 0 && (
+            <div 
+              style={{
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
+                borderRadius: "12px",
+                padding: "20px 24px",
+                marginTop: "8px",
+                marginBottom: "32px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.02)"
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "var(--text-muted)" }}>
+                <span style={{ display: "flex", alignItems: "center", opacity: 0.8 }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                  </svg>
+                </span>
+                <span style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  Table of Contents
+                </span>
+              </div>
+              <nav style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {toc.map((item) => (
+                  <a 
+                    key={item.id} 
+                    href={`#${item.id}`} 
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "8px",
+                      fontSize: "14px",
+                      color: "var(--text-muted)",
+                      textDecoration: "none",
+                      lineHeight: "1.5",
+                      paddingLeft: (item.level - 2) * 16,
+                      transition: "color 0.2s, transform 0.2s"
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "var(--text-primary)";
+                      e.currentTarget.style.transform = "translateX(2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "var(--text-muted)";
+                      e.currentTarget.style.transform = "none";
+                    }}
+                  >
+                    <span style={{ opacity: 0.5 }}>•</span>
+                    <span>{item.text}</span>
+                  </a>
+                ))}
+              </nav>
+            </div>
+          )}
+
           <article
             ref={articleRefCallback}
             className="v2-blog-article"
@@ -148,33 +212,6 @@ export default function BlogPostClient({
             </Link>
           </div>
         </div>
-
-        {/* Sidebar Table of Contents */}
-        {toc && toc.length > 0 && (
-          <aside style={{ width: 260, flexShrink: 0, position: "sticky", top: 120, display: "flex", flexDirection: "column", gap: 16 }} className="v2-blog-toc-sidebar">
-            <h3 style={{ fontSize: "0.875rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--v2-text-muted)", fontWeight: 600 }}>Table of Contents</h3>
-            <nav style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {toc.map((item) => (
-                <a 
-                  key={item.id} 
-                  href={`#${item.id}`} 
-                  style={{ 
-                    fontSize: "0.875rem", 
-                    color: "var(--v2-text-secondary)", 
-                    textDecoration: "none",
-                    paddingLeft: (item.level - 2) * 16,
-                    lineHeight: 1.4,
-                    transition: "color 0.2s"
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--v2-text-primary)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--v2-text-secondary)")}
-                >
-                  {item.text}
-                </a>
-              ))}
-            </nav>
-          </aside>
-        )}
       </main>
 
       <footer className="v2-footer">
